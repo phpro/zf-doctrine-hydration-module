@@ -1,5 +1,6 @@
-# Work in Progress
-
+# Doctrine Hydration Module
+This module provides a configurable way to create new doctrine hydrators.
+By using the configurable API, it is easy to create a custom hydrator for any use case you want.
 
 #Installation
 

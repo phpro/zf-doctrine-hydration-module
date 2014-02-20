@@ -6,7 +6,6 @@
 
 namespace Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Persistence\ProvidesObjectManager;
@@ -38,7 +37,7 @@ class EmbeddedField extends AllowRemoveByValue
             $result = [];
             foreach ($value as $index => $object) {
                 $hydrator = $this->getDoctrineHydrator($object);
-                $records[$index] = $hydrator->extract($object);
+                $result[$index] = $hydrator->extract($object);
 
                 // Add discrimator field if it can be found.
                 if (isset($mapping['discriminatorMap'])) {
@@ -50,7 +49,7 @@ class EmbeddedField extends AllowRemoveByValue
 
             }
 
-        // Embedded One:
+            // Embedded One:
         } else {
             $hydrator = $this->getDoctrineHydrator($value);
             $result = $hydrator->extract($value);
@@ -60,7 +59,6 @@ class EmbeddedField extends AllowRemoveByValue
     }
 
     /**
-     * TODO
      * @param mixed $value
      *
      * @return array|Collection|mixed
@@ -69,22 +67,21 @@ class EmbeddedField extends AllowRemoveByValue
     {
         $mapping = $this->metadata->fieldMappings[$this->collectionName];
         $targetDocument = $mapping['targetDocument'];
+        $discriminator = ($mapping ['discriminatorField']) ? $mapping ['discriminatorField'] : false;
+        $discriminatorMap = ($mapping['discriminatorMap']) ? $mapping['discriminatorMap'] : array();
 
         if (is_array($value) || $value instanceof \Iterator) {
-            $result = new ArrayCollection();
+            $result = array();
             foreach ($value as $data) {
+                // Use configured discriminator as discriminator class:
+                if ($discriminator && is_array($data)) {
+                    if (isset($data[$discriminator]) && isset($discriminatorMap[$data[$discriminator]])) {
+                        $targetDocument = $discriminatorMap[$data[$discriminator]];
+                    }
+                }
 
-                $rc = new \ReflectionClass($targetDocument);
-                $object = $rc->newInstanceWithoutConstructor();
-
-                $hydrator = $this->getDoctrineHydrator($targetDocument);
-                $hydrator->hydrate($data, $object);
-                $result->add($object);
-
-                // Todo: discriminatorMap
-
+                $result[] = $this->hydrateSingle($targetDocument, $data);
             }
-
         } else {
             $rc = new \ReflectionClass($targetDocument);
             $object = $rc->newInstanceWithoutConstructor();
@@ -93,12 +90,28 @@ class EmbeddedField extends AllowRemoveByValue
             $result = $hydrator->hydrate($value, $object);
         }
 
-
-        var_dump($result);exit;
-
-        // Todo:
-        throw new \Exception('Todo: hydrate embedded document');
         return parent::hydrate($result);
+    }
+
+    /**
+     * @param $targetDocument
+     * @param $document
+     *
+     * @return object
+     */
+    protected function hydrateSingle($targetDocument, $document)
+    {
+        if (is_object($document)) {
+            return $document;
+        }
+
+        $rc = new \ReflectionClass($targetDocument);
+        $object = $rc->newInstanceWithoutConstructor();
+
+        $hydrator = $this->getDoctrineHydrator($targetDocument);
+        $hydrator->hydrate($document, $object);
+
+        return $object;
     }
 
 

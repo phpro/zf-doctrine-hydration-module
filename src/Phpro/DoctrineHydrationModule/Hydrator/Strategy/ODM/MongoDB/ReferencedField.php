@@ -42,23 +42,39 @@ class ReferencedField extends AllowRemoveByValue
      */
     public function hydrate($value)
     {
+
         $mapping = $this->metadata->fieldMappings[$this->collectionName];
         $targetDocument = $mapping['targetDocument'];
-        $result = $value;
 
         // Reference Many:
         if (is_array($value) || $value instanceof \Iterator) {
             $result = array();
             foreach ($value as $documentId) {
-                $result[] = $this->findTargetDocument($targetDocument, $documentId);
+                $result[] = $this->hydrateSingle($targetDocument, $documentId);
             }
 
-        // Reference One:
+            // Reference One:
         } else {
-            $result = $this->findTargetDocument($targetDocument, $value);
+            $result = $this->hydrateSingle($targetDocument, $value);
         }
 
         return parent::hydrate($result);
+    }
+
+    /**
+     * @param $targetDocument
+     * @param $document
+     *
+     * @return object
+     */
+    protected function hydrateSingle($targetDocument, $document)
+    {
+        if (is_object($document)) {
+            return $document;
+        }
+
+        return $this->findTargetDocument($targetDocument, $document);
+
     }
 
     /**

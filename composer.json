@@ -1,0 +1,34 @@
+{
+    "name": "phpro/doctrine-hydration-module",
+    "license": "MIT",
+    "description": "Doctrine hydrators for ZF2",
+    "keywords": [
+      "zf2",
+      "doctrine",
+      "hydrator"
+    ],
+    "authors": [
+        {
+            "name": "Toon Verwerft",
+            "email": "toon.verwerft@phpro.be"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "doctrine/common": ">=2.1",
+      "zendframework/zend-servicemanager": "2.*",
+      "zendframework/zend-stdlib": "2.*",
+      "doctrine/doctrine-module": ">=0.8.0"
+    },
+    "require-dev": {
+      "fabpot/PHP-CS-Fixer": "*",
+      "phpspec/phpspec": "2.0.*@dev",
+      "doctrine/doctrine-orm-module": "*",
+      "doctrine/doctrine-mongo-odm-module": "*"
+    },
+    "autoload": {
+      "psr-0": {
+        "Phpro\\DoctrineHydrationModule": "src/"
+      }
+    }
+}

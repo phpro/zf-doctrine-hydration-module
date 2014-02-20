@@ -9,6 +9,7 @@ namespace Phpro\DoctrineHydrationModule\Service;
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Stdlib\Hydrator;
+use Phpro\DoctrineHydrationModule\Hydrator\DoctrineHydrator;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;

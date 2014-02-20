@@ -6,6 +6,8 @@
 
 namespace Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
@@ -17,7 +19,7 @@ use Doctrine\ODM\MongoDB\PersistentCollection as MongoDbPersistentCollection;
  *
  * @package Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB
  */
-class PersistentCollection extends AllowRemoveByValue
+class EmbeddedField extends AllowRemoveByValue
     implements ObjectManagerAwareInterface
 {
 
@@ -30,9 +32,10 @@ class PersistentCollection extends AllowRemoveByValue
      */
     public function extract($value)
     {
+        // Embedded Many
         if ($value instanceof MongoDbPersistentCollection) {
             $mapping = $value->getMapping();
-            $records = [];
+            $result = [];
             foreach ($value as $index => $object) {
                 $hydrator = $this->getDoctrineHydrator($object);
                 $records[$index] = $hydrator->extract($object);
@@ -41,17 +44,63 @@ class PersistentCollection extends AllowRemoveByValue
                 if (isset($mapping['discriminatorMap'])) {
                     $discriminatorName = array_search(get_class($object), $mapping['discriminatorMap']);
                     if ($discriminatorName) {
-                        $records[$index][$mapping['discriminatorField']] = $discriminatorName;
+                        $result[$index][$mapping['discriminatorField']] = $discriminatorName;
                     }
                 }
 
             }
 
-            $value = $records;
+        // Embedded One:
+        } else {
+            $hydrator = $this->getDoctrineHydrator($value);
+            $result = $hydrator->extract($value);
         }
 
-        return parent::extract($value);
+        return parent::extract($result);
     }
+
+    /**
+     * TODO
+     * @param mixed $value
+     *
+     * @return array|Collection|mixed
+     */
+    public function hydrate($value)
+    {
+        $mapping = $this->metadata->fieldMappings[$this->collectionName];
+        $targetDocument = $mapping['targetDocument'];
+
+        if (is_array($value) || $value instanceof \Iterator) {
+            $result = new ArrayCollection();
+            foreach ($value as $data) {
+
+                $rc = new \ReflectionClass($targetDocument);
+                $object = $rc->newInstanceWithoutConstructor();
+
+                $hydrator = $this->getDoctrineHydrator($targetDocument);
+                $hydrator->hydrate($data, $object);
+                $result->add($object);
+
+                // Todo: discriminatorMap
+
+            }
+
+        } else {
+            $rc = new \ReflectionClass($targetDocument);
+            $object = $rc->newInstanceWithoutConstructor();
+
+            $hydrator = $this->getDoctrineHydrator($targetDocument);
+            $result = $hydrator->hydrate($value, $object);
+        }
+
+
+        var_dump($result);exit;
+
+        // Todo:
+        throw new \Exception('Todo: hydrate embedded document');
+        return parent::hydrate($result);
+    }
+
 
     /**
      * @param $document

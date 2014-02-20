@@ -2,8 +2,8 @@
 return array(
     'service_manager' => array(
       'invokables' => array(
-        'DoctrineHydrationModule\Strategy\ODM\MongoDB\PersistentCollection' => 'Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB\PersistentCollection',
-        'DoctrineHydrationModule\Strategy\ODM\MongoDB\ReferencedCollection' => 'Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB\ReferencedCollection',
+        'DoctrineHydrationModule\Strategy\ODM\MongoDB\EmbeddedField' => 'Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB\EmbeddedField',
+        'DoctrineHydrationModule\Strategy\ODM\MongoDB\ReferencedField' => 'Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB\ReferencedField',
       ),
     ),
     'hydrators' => array(

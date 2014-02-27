@@ -4,7 +4,7 @@
  * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
  */
 
-namespace Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB;
+namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
@@ -19,7 +19,7 @@ use Doctrine\ODM\MongoDB\PersistentCollection as MongoDbPersistentCollection;
  * @package Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB
  */
 class EmbeddedField extends AllowRemoveByValue
-    implements ObjectManagerAwareInterface
+    implements ObjectManagerAwareInterface, MongoStrategyInterface
 {
 
     use ProvidesObjectManager;
@@ -49,7 +49,7 @@ class EmbeddedField extends AllowRemoveByValue
 
             }
 
-            // Embedded One:
+        // Embedded One:
         } else {
             $hydrator = $this->getDoctrineHydrator($value);
             $result = $hydrator->extract($value);
@@ -83,11 +83,7 @@ class EmbeddedField extends AllowRemoveByValue
                 $result[] = $this->hydrateSingle($targetDocument, $data);
             }
         } else {
-            $rc = new \ReflectionClass($targetDocument);
-            $object = $rc->newInstanceWithoutConstructor();
-
-            $hydrator = $this->getDoctrineHydrator($targetDocument);
-            $result = $hydrator->hydrate($value, $object);
+            $result = $this->hydrateSingle($targetDocument, $value);
         }
 
         return parent::hydrate($result);

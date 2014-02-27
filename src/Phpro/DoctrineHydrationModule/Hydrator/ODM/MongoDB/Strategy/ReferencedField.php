@@ -4,7 +4,7 @@
  * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
  */
 
-namespace Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB;
+namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
@@ -18,7 +18,7 @@ use DoctrineModule\Stdlib\Hydrator\Strategy\AllowRemoveByValue;
  * @package Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB
  */
 class ReferencedField extends AllowRemoveByValue
-    implements ObjectManagerAwareInterface
+    implements ObjectManagerAwareInterface, MongoStrategyInterface
 {
 
     use ProvidesObjectManager;

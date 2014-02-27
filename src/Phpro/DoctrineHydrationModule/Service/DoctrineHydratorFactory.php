@@ -10,6 +10,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Stdlib\Hydrator;
 use Phpro\DoctrineHydrationModule\Hydrator\DoctrineHydrator;
+use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB;
 use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
@@ -28,6 +29,10 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
 
     const FACTORY_NAMESPACE = 'doctrine-hydrator';
 
+
+    const OBJECT_MANAGER_TYPE_ODM_MONGODB = 'ODM/MongoDB';
+    const OBJECT_MANAGER_TYPE_ORM = 'ORM';
+
     /**
      * Cache of canCreateServiceWithName lookups
      * @var array
@@ -37,7 +42,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     /**
      * Determine if we can create a service with name
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param ServiceLocatorInterface $hydratorManager
      * @param                         $name
      * @param                         $requestedName
      *
@@ -96,7 +101,6 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      */
     public function createServiceWithName(ServiceLocatorInterface $hydratorManager, $name, $requestedName)
     {
-        
         $serviceManager = $hydratorManager->getServiceLocator();
 
         $config   = $serviceManager->get('Config');
@@ -122,13 +126,22 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     }
 
     /**
-     * @param $className
+     * @param $objectManager
      *
      * @return string
+     * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
      */
-    protected function normalizeClassname($className)
+    protected function getObjectManagerType($objectManager)
     {
-        return '\\' . ltrim($className, '\\');
+        if (class_exists('\\Doctrine\\ODM\\MongoDB\\DocumentManager')
+            && $objectManager instanceof \Doctrine\ODM\MongoDB\DocumentManager) {
+            return self::OBJECT_MANAGER_TYPE_ODM_MONGODB;
+        } elseif (class_exists('\\Doctrine\\ORM\\EntityManager')
+            && $objectManager instanceof \Doctrine\ORM\EntityManager) {
+            return self::OBJECT_MANAGER_TYPE_ORM;
+        }
+
+        throw new ServiceNotCreatedException('Unknown object manager type: ' . get_class($objectManager));
     }
 
     /**
@@ -140,11 +153,11 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      */
     protected function loadObjectManager(ServiceLocatorInterface $serviceManager, $config)
     {
-        if ($serviceManager->has($config['object_manager'])) {
-            $objectManager = $serviceManager->get($config['object_manager']);
-        } else {
+        if (!$serviceManager->has($config['object_manager'])) {
             throw new ServiceNotCreatedException('The object_manager could not be found.');
         }
+
+        $objectManager = $serviceManager->get($config['object_manager']);
         return $objectManager;
     }
 
@@ -157,12 +170,13 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      */
     protected function loadEntityHydrator(ServiceLocatorInterface $serviceManager, $config, $objectManager)
     {
-        if (class_exists('\\Doctrine\\ODM\\MongoDB\\DocumentManager') && $objectManager instanceof \Doctrine\ODM\MongoDB\DocumentManager) {
-            $hydratorFactory = $objectManager->getHydratorFactory();
-            $hydrator = $hydratorFactory->getHydratorFor($config['entity_class']);
-        } else {
+        $objectManagerType = $this->getObjectManagerType($objectManager);
+        if ($objectManagerType != self::OBJECT_MANAGER_TYPE_ODM_MONGODB) {
             return null;
         }
+
+        $hydratorFactory = $objectManager->getHydratorFactory();
+        $hydrator = $hydratorFactory->getHydratorFor($config['entity_class']);
 
         // Configure hydrator:
         $this->configureHydratorStrategies($hydrator, $serviceManager, $config, $objectManager);
@@ -179,7 +193,14 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      */
     protected function loadDoctrineModuleHydrator(ServiceLocatorInterface $serviceManager, $config, $objectManager)
     {
-        $hydrator = new Hydrator\DoctrineObject($objectManager, $config['entity_class'], $config['by_value']);
+        $objectManagerType = $this->getObjectManagerType($objectManager);
+
+        if ($objectManagerType == self::OBJECT_MANAGER_TYPE_ODM_MONGODB) {
+            $hydrator = new MongoDB\DoctrineObject($objectManager, $config['entity_class'], $config['by_value']);
+        } else {
+            $hydrator = new Hydrator\DoctrineObject($objectManager, $config['entity_class'], $config['by_value']);
+        }
+
         $this->configureHydratorStrategies($hydrator, $serviceManager, $config, $objectManager);
         return $hydrator;
     }

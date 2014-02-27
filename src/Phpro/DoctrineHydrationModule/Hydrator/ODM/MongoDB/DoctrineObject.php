@@ -12,8 +12,7 @@ namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB;
 
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as BaseHydrator;
 use DoctrineModule\Stdlib\Hydrator\Strategy as DoctrineStrategy;
-use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\MongoStrategyInterface;
-use Traversable;
+use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\AbstractMongoStrategy;
 
 /**
  * Class DoctrineObject
@@ -40,11 +39,27 @@ class DoctrineObject extends BaseHydrator
             $fieldMeta = $this->metadata->fieldMappings[$association];
             $reference = isset($fieldMeta['reference']) && $fieldMeta['reference'];
             $embedded = isset($fieldMeta['embedded']) && $fieldMeta['embedded'];
+            $isCollection = $this->metadata->isCollectionValuedAssociation($association);
+            $strategy = null;
 
-            if ($reference) {
-                $this->addStrategy($association, new Strategy\ReferencedField($this->objectManager));
-            } elseif ($embedded) {
-                $this->addStrategy($association, new Strategy\EmbeddedField($this->objectManager));
+            if ($isCollection) {
+                if ($reference) {
+                    $strategy = new Strategy\ReferencedCollection($this->objectManager);
+                } elseif ($embedded) {
+                    $strategy = new Strategy\EmbeddedCollection($this->objectManager);
+                }
+            } else {
+                if ($reference) {
+                    $strategy = new Strategy\ReferencedField($this->objectManager);
+                } elseif ($embedded) {
+                    $strategy = new Strategy\EmbeddedField($this->objectManager);
+                }
+            }
+
+            if ($strategy) {
+                $this->addStrategy($association, $strategy);
+                $strategy->setCollectionName($association)
+                    ->setClassMetadata($this->metadata);
             }
         }
 
@@ -65,9 +80,9 @@ class DoctrineObject extends BaseHydrator
         if ($this->hasStrategy($collectionName)) {
             $strategy = $this->getStrategy($collectionName);
 
-            if ($strategy instanceof MongoStrategyInterface) {
+            if ($strategy instanceof AbstractMongoStrategy) {
                 $strategy->setObject($object);
-                $this->hydrateValue($collectionName, $values);
+                $this->hydrateValue($collectionName, $values, $values);
                 return;
             }
 

@@ -11,11 +11,13 @@ use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
 
 /**
+ * TODO: referenced hydrators
+ *
  * Class PersistentCollection
  *
  * @package Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB
  */
-class ReferencedField extends AbstractMongoStrategy
+class ReferencedCollection extends AbstractMongoStrategy
 {
 
     /**
@@ -29,6 +31,7 @@ class ReferencedField extends AbstractMongoStrategy
         return parent::extract($value);
     }
 
+
     /**
      * @param mixed $value
      *
@@ -36,14 +39,33 @@ class ReferencedField extends AbstractMongoStrategy
      */
     public function hydrate($value)
     {
-        if (is_object($value)) {
-            return $value;
-        }
-
         $mapping = $this->metadata->fieldMappings[$this->collectionName];
         $targetDocument = $mapping['targetDocument'];
 
-        return $this->findTargetDocument($targetDocument, $value);
+        $result = array();
+        foreach ($value as $documentId) {
+            $result[] = $this->hydrateSingle($targetDocument, $documentId);
+        }
+
+
+        return $this->hydrateCollection($result);
+    }
+
+    /**
+     * TODO: use ReferencedField
+     *
+     * @param $targetDocument
+     * @param $document
+     *
+     * @return object
+     */
+    protected function hydrateSingle($targetDocument, $document)
+    {
+        if (is_object($document)) {
+            return $document;
+        }
+
+        return $this->findTargetDocument($targetDocument, $document);
     }
 
 }

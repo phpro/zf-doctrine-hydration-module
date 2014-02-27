@@ -1,0 +1,103 @@
+<?php
+/**
+ * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
+ * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ */
+
+namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
+
+use Doctrine\Common\Collections\Collection;
+use DoctrineModule\Persistence\ProvidesObjectManager;
+use DoctrineModule\Stdlib\Hydrator;
+use Doctrine\ODM\MongoDB\PersistentCollection as MongoDbPersistentCollection;
+
+/**
+ * Class PersistentCollection
+ *
+ * @package Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB
+ */
+class EmbeddedCollection extends AbstractMongoStrategy
+{
+
+    /**
+     * @param mixed $value
+     *
+     * @return array|mixed
+     * @throws \Exception
+     */
+    public function extract($value)
+    {
+        // Embedded Many
+        if (!($value instanceof MongoDbPersistentCollection)) {
+            throw new \Exception('Embedded collections need a persistent collection.');
+        }
+
+        $mapping = $value->getMapping();
+        $result = [];
+        foreach ($value as $index => $object) {
+            $hydrator = $this->getDoctrineHydrator($object);
+            $result[$index] = $hydrator->extract($object);
+
+            // Add discrimator field if it can be found.
+            if (isset($mapping['discriminatorMap'])) {
+                $discriminatorName = array_search(get_class($object), $mapping['discriminatorMap']);
+                if ($discriminatorName) {
+                    $result[$index][$mapping['discriminatorField']] = $discriminatorName;
+                }
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return array|Collection|mixed
+     */
+    public function hydrate($value)
+    {
+        $mapping = $this->metadata->fieldMappings[$this->collectionName];
+        $targetDocument = $mapping['targetDocument'];
+        $discriminator = isset($mapping ['discriminatorField']) ? $mapping ['discriminatorField'] : false;
+        $discriminatorMap = isset($mapping['discriminatorMap']) ? $mapping['discriminatorMap'] : array();
+
+        $result = array();
+        foreach ($value as $data) {
+            // Use configured discriminator as discriminator class:
+            if ($discriminator && is_array($data)) {
+                if (isset($data[$discriminator]) && isset($discriminatorMap[$data[$discriminator]])) {
+                    $targetDocument = $discriminatorMap[$data[$discriminator]];
+                }
+            }
+
+            $result[] = $this->hydrateSingle($targetDocument, $data);
+        }
+
+        return $this->hydrateCollection($result);
+    }
+
+    /**
+     * Note: do not use EmbeddedField strategy. Discriminators will not work.
+     *
+     * @param $targetDocument
+     * @param $document
+     *
+     * @return object
+     */
+    protected function hydrateSingle($targetDocument, $document)
+    {
+        if (is_object($document)) {
+            return $document;
+        }
+
+        $rc = new \ReflectionClass($targetDocument);
+        $object = $rc->newInstanceWithoutConstructor();
+
+        $hydrator = $this->getDoctrineHydrator($targetDocument);
+        $hydrator->hydrate($document, $object);
+
+        return $object;
+    }
+
+}

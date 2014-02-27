@@ -76,4 +76,4 @@ abstract class AbstractMongoStrategy
         $document = $repo->find($targetId);
         return $document;
     }
-} 
+}

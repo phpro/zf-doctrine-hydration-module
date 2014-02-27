@@ -56,7 +56,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         $serviceManager = $hydratorManager->getServiceLocator();
-        
+
         if (!$serviceManager->has('Config')) {
             return false;
         }

@@ -6,6 +6,7 @@ use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator\Strategy\AbstractCollectionStrategy;
 use DoctrineModule\Stdlib\Hydrator\Strategy\AllowRemoveByValue;
+use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\DoctrineObject;
 
 /**
  * Abstract AbstractMongoStrategy

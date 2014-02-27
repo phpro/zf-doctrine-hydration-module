@@ -2,6 +2,9 @@
 This module provides a configurable way to create new doctrine hydrators.
 By using the configurable API, it is easy to create a custom hydrator for any use case you want.
 
+For MongoDB ODM, a specific hydrator is added. This hydrator will be able to handle Referenced documents and Embedded Documents.
+It is also possible to hydrate advanced documents with discriminator maps.
+
 #Installation
 
 ## Add to composer.json
@@ -36,5 +39,9 @@ return array(
     ),
 );
 ```
+
+use_generated_hydrator will only be used with mongoDB ODM and will use the generated hydrators instead of the Doctrine Module Hydrator.
+Strategies will not work when this option is set to `true`.
+
 
 From here on, you can get the hydrator by calling `get('hydrator-manager-key')` on the HydratorManager.

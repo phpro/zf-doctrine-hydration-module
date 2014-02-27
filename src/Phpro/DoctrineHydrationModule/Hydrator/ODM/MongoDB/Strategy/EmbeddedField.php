@@ -25,6 +25,17 @@ class EmbeddedField extends AllowRemoveByValue
     use ProvidesObjectManager;
 
     /**
+     *
+     * @param ObjectManager $objectManager Possibly injected by hydrator factory
+     */
+    public function __construct($objectManager = null)
+    {
+        if ($objectManager) {
+            $this->setObjectManager($objectManager);
+        }
+    }
+
+    /**
      * @param mixed $value
      *
      * @return mixed

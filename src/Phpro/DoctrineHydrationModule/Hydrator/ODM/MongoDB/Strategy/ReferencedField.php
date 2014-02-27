@@ -7,6 +7,7 @@
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
@@ -22,6 +23,17 @@ class ReferencedField extends AllowRemoveByValue
 {
 
     use ProvidesObjectManager;
+
+    /**
+     *
+     * @param ObjectManager $objectManager Possibly injected by hydrator factory
+     */
+    public function __construct($objectManager = null)
+    {
+        if ($objectManager) {
+            $this->setObjectManager($objectManager);
+        }
+    }
 
     /**
      * Hooray: The doctrine hydrator allready does this work for us!!

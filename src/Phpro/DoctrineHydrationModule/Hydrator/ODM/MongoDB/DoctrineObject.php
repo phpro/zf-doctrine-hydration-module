@@ -24,13 +24,11 @@ class DoctrineObject extends BaseHydrator
 {
 
     /**
-     * @param object $object
+     * TODO: For the moment only byValue configured...
      *
      * @throws InvalidArgumentException
-     *
-     * TODO: For the moment only byValue configured...
      */
-    protected function prepare($object)
+    protected function prepareStrategies()
     {
         $associations = $this->metadata->getAssociationNames();
         foreach ($associations as $association) {
@@ -40,15 +38,18 @@ class DoctrineObject extends BaseHydrator
             }
 
             $fieldMeta = $this->metadata->fieldMappings[$association];
-            if ($fieldMeta['reference']) {
-                $this->addStrategy($association, new Strategy\ReferencedField());
-            } else {
-                $this->addStrategy($association, new Strategy\ReferencedField());
+            $reference = isset($fieldMeta['reference']) && $fieldMeta['reference'];
+            $embedded = isset($fieldMeta['embedded']) && $fieldMeta['embedded'];
+
+            if ($reference) {
+                $this->addStrategy($association, new Strategy\ReferencedField($this->objectManager));
+            } elseif ($embedded) {
+                $this->addStrategy($association, new Strategy\EmbeddedField($this->objectManager));
             }
         }
 
         // Call through for DI
-        parent::prepare($object);
+        parent::prepareStrategies();
     }
 
     /**

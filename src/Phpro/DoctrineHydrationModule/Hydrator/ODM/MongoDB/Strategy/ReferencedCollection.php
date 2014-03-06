@@ -27,7 +27,7 @@ class ReferencedCollection extends AbstractMongoStrategy
      */
     public function extract($value)
     {
-        $strategy = new ReferencedField();
+        $strategy = new ReferencedField($this->getObjectManager());
         $strategy->setClassMetadata($this->getClassMetadata());
         $strategy->setCollectionName($this->getCollectionName());
 

@@ -9,6 +9,15 @@ return array(
         'DoctrineHydrationModule\Strategy\ODM\MongoDB\EmbeddedReferenceCollection' => 'Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedReferenceCollection',
         'DoctrineHydrationModule\Strategy\ODM\MongoDB\EmbeddedReferenceField' => 'Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedReferenceField',
       ),
+
+      'shared' => array(
+          'DoctrineHydrationModule\Strategy\ODM\MongoDB\EmbeddedCollection' => false,
+          'DoctrineHydrationModule\Strategy\ODM\MongoDB\EmbeddedField' => false,
+          'DoctrineHydrationModule\Strategy\ODM\MongoDB\ReferencedCollection' => false,
+          'DoctrineHydrationModule\Strategy\ODM\MongoDB\ReferencedField' => false,
+          'DoctrineHydrationModule\Strategy\ODM\MongoDB\EmbeddedReferenceCollection' => false,
+          'DoctrineHydrationModule\Strategy\ODM\MongoDB\EmbeddedReferenceField' => false,
+      ),
     ),
     'hydrators' => array(
         'abstract_factories' => array(

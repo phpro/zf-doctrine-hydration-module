@@ -22,10 +22,15 @@ class EmbeddedReferenceField extends AbstractMongoStrategy
      */
     public function extract($value)
     {
-        $strategy = new EmbeddedField();
+        if (!$value) {
+            return $value;
+        }
+
+        $strategy = new EmbeddedField($this->getObjectManager());
         $strategy->setClassMetadata($this->getClassMetadata());
         $strategy->setCollectionName($this->getCollectionName());
         $strategy->setObject($value);
+
         return $strategy->extract($value);
     }
 
@@ -36,10 +41,12 @@ class EmbeddedReferenceField extends AbstractMongoStrategy
      */
     public function hydrate($value)
     {
-        $strategy = new ReferencedField();
+        $strategy = new ReferencedField($this->getObjectManager());
         $strategy->setClassMetadata($this->getClassMetadata());
         $strategy->setCollectionName($this->getCollectionName());
-        $strategy->setObject($value);
+        if ($this->getObject()) {
+            $strategy->setObject($this->getObject());
+        }
         return $strategy->hydrate($value);
     }
 

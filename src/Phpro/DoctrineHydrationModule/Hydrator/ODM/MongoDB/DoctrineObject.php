@@ -10,6 +10,7 @@
 
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB;
 
+use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as BaseHydrator;
 use DoctrineModule\Stdlib\Hydrator\Strategy as DoctrineStrategy;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\AbstractMongoStrategy;
@@ -32,10 +33,14 @@ class DoctrineObject extends BaseHydrator
         $associations = $this->metadata->getAssociationNames();
         foreach ($associations as $association) {
 
+            // Add meta data to existing collections:
             if ($this->hasStrategy($association)) {
+                $strategy = $this->getStrategy($association);
+                $this->injectStrategyDependencies($strategy, $association);
                 continue;
             }
 
+            // Create new strategy based on type of filed
             $fieldMeta = $this->metadata->fieldMappings[$association];
             $reference = isset($fieldMeta['reference']) && $fieldMeta['reference'];
             $embedded = isset($fieldMeta['embedded']) && $fieldMeta['embedded'];
@@ -56,15 +61,34 @@ class DoctrineObject extends BaseHydrator
                 }
             }
 
+            // Add meta data
             if ($strategy) {
+                $this->injectStrategyDependencies($strategy, $association);
                 $this->addStrategy($association, $strategy);
-                $strategy->setCollectionName($association)
-                    ->setClassMetadata($this->metadata);
             }
         }
 
         // Call through for DI
         parent::prepareStrategies();
+    }
+
+    /**
+     * Inject dependencies to strategy that is injected in a later state
+     *
+     * @param $strategy
+     * @param $association
+     */
+    protected function injectStrategyDependencies($strategy, $association)
+    {
+
+        if ($strategy instanceof DoctrineStrategy\AbstractCollectionStrategy) {
+            $strategy->setCollectionName($association);
+            $strategy->setClassMetadata($this->metadata);
+        }
+
+        if ($strategy instanceof ObjectManagerAwareInterface) {
+            $strategy->setObjectManager($this->objectManager);
+        }
     }
 
     /**

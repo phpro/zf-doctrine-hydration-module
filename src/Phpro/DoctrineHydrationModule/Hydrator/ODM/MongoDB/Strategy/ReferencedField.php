@@ -19,14 +19,26 @@ class ReferencedField extends AbstractMongoStrategy
 {
 
     /**
-     * Hooray: The doctrine hydrator allready does this work for us!!
      * @param mixed $value
      *
      * @return mixed
      */
     public function extract($value)
     {
-        return parent::extract($value);
+        if (!is_object($value)) {
+            return $value;
+        }
+
+        $idField = $this->metadata->getIdentifier();
+        $getter = 'get' . ucfirst($idField);
+
+        // Validate object:
+        $rc = new \ReflectionClass($value);
+        if (!$rc->hasMethod($getter)) {
+            return $value;
+        }
+
+        return $value->$getter();
     }
 
     /**

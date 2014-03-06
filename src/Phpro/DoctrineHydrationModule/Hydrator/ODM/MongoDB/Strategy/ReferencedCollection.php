@@ -21,14 +21,23 @@ class ReferencedCollection extends AbstractMongoStrategy
 {
 
     /**
-     * Hooray: The doctrine hydrator allready does this work for us!!
      * @param mixed $value
      *
      * @return mixed
      */
     public function extract($value)
     {
-        return parent::extract($value);
+        $strategy = new ReferencedField();
+        $strategy->setClassMetadata($this->getClassMetadata());
+        $strategy->setCollectionName($this->getCollectionName());
+
+        $result = [];
+        foreach ($value as $key => $record) {
+            $strategy->setObject($record);
+            $result[$key] = $strategy->extract($record);
+        }
+
+        return $result;
     }
 
 

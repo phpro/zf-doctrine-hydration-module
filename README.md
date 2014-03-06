@@ -45,3 +45,12 @@ Strategies will not work when this option is set to `true`.
 
 
 From here on, you can get the hydrator by calling `get('hydrator-manager-key')` on the HydratorManager.
+
+#Custom strategies:
+## MongoDB ODM
+- EmbeddedCollection: Used for embedded collections
+- EmbeddedField: Used for embedded fields
+- ReferencedCollection: Used for referenced collections
+- ReferencedField: Used for referenced fields.
+- EmbeddedReferenceCollection: This is a custom strategy that can be used in an API to display all fields in a referenced object. The hydration works as a regular referenced object.
+- EmbeddedReferenceField: This is a custom strategy that can be used in an API to display all fields in a referenced object. The hydration works as a regular referenced object.

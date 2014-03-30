@@ -7,4 +7,3 @@ class DoctrineObjectTest extends \PHPUnit_Framework_TestCase
 {
 
 }
- 

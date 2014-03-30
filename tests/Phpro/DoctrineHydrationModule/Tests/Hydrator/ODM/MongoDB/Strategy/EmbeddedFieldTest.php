@@ -12,4 +12,3 @@ class EmbeddedFieldTest extends AbstractMongoStrategyTest
 {
 
 }
- 

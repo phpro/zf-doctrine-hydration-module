@@ -12,4 +12,3 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
 {
 
 }
- 

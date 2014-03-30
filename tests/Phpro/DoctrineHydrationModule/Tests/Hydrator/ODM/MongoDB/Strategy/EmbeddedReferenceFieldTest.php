@@ -12,4 +12,3 @@ class EmbeddedReferenceFieldTest extends AbstractMongoStrategyTest
 {
 
 }
- 

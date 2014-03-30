@@ -1,0 +1,22 @@
+language: php
+php:
+  - 5.5
+  - 5.4
+  - hhvm
+
+matrix:
+  allow_failures:
+    - php: hhvm
+
+before_script:
+  - phpenv config-add .travis-config.ini
+  - composer self-update
+  - pecl install -f mongo-1.4.1
+  - composer install --dev --prefer-source
+
+script:
+  - ./vendor/bin/php-cs-fixer fix . --dry-run
+  - ./vendor/bin/phpunit -c"./tests/phpunit.xml"
+
+services:
+  - mongodb

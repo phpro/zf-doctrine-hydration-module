@@ -154,4 +154,3 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($generatedHydrator, $hydrator->getHydrateService());
     }
 }
- 

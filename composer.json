@@ -22,7 +22,7 @@
     },
     "require-dev": {
       "fabpot/PHP-CS-Fixer": "*",
-      "phpspec/phpspec": "2.0.*@dev",
+      "phpunit/phpunit": "*",
       "doctrine/doctrine-orm-module": "*",
       "doctrine/doctrine-mongo-odm-module": "*"
     },

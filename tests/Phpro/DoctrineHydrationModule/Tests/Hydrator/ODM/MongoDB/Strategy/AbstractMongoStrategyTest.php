@@ -17,6 +17,15 @@ abstract class AbstractMongoStrategyTest extends \PHPUnit_Framework_TestCase
     abstract protected function createStrategy();
 
     /**
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function stubObjectManager()
+    {
+        $objectManager = $this->getMock('Doctrine\ODM\MongoDB\DocumentManager', [], [], '', false);
+        return $objectManager;
+    }
+
+    /**
      * @test
      */
     public function it_should_be_a_mongodb_strategy()
@@ -41,5 +50,17 @@ abstract class AbstractMongoStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $strategy = $this->createStrategy();
         $this->assertInstanceOf('DoctrineModule\Persistence\ObjectManagerAwareInterface', $strategy);
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_have_an_object_manager()
+    {
+        $objectManager = $this->stubObjectManager();
+        $strategy = $this->createStrategy();
+
+        $strategy->setObjectManager($objectManager);
+        $this->assertEquals($objectManager, $strategy->getObjectManager());
     }
 }

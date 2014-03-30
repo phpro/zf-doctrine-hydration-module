@@ -12,3 +12,6 @@ if (!file_exists($file = __DIR__ . '/../vendor/autoload.php')) {
 }
 $loader = require $file;
 $loader->add('Phpro\DoctrineHydrationModule\Tests', __DIR__);
+
+// Constants
+define('TEST_BASE_PATH', __DIR__);

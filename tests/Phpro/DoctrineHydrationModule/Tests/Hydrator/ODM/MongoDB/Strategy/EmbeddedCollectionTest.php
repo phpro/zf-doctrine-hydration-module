@@ -2,7 +2,6 @@
 
 namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedCollection;
 use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationEmbedMany;
 use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationUser;
@@ -38,11 +37,7 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         $embedded->setName('name');
         $user->addEmbedMany([$embedded]);
 
-        /** @var DocumentManager $objectmanager */
-        $objectManager = $this->dm;
-        $metadata = $objectManager->getClassMetadata(get_class($user));
-        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'embedMany');
-
+        $strategy = $this->getStrategy($this->dm, $user, 'embedMany');
         $result = $strategy->extract($user->getEmbedMany());
         $this->assertEquals('name', $result[0]['name']);
     }
@@ -63,11 +58,7 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
             ]
         ];
 
-        /** @var DocumentManager $objectmanager */
-        $objectManager = $this->dm;
-        $metadata = $objectManager->getClassMetadata(get_class($user));
-        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'embedMany');
-
+        $strategy = $this->getStrategy($this->dm, $user, 'embedMany');
         $strategy->hydrate($data);
         $this->assertEquals('name', $user->getEmbedMany()[0]->getName());
     }

@@ -1,7 +1,6 @@
 <?php
 
 namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\ReferencedCollection;
 use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationReferenceMany;
 use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationUser;
@@ -37,11 +36,7 @@ class ReferencedCollectionTest extends AbstractMongoStrategyTest
         $referenced->setName('name');
         $user->addReferenceMany([$referenced]);
 
-        /** @var DocumentManager $objectmanager */
-        $objectManager = $this->dm;
-        $metadata = $objectManager->getClassMetadata(get_class($user));
-        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'referenceMany');
-
+        $strategy = $this->getStrategy($this->dm, $user, 'referenceMany');
         $result = $strategy->extract($user->getReferenceMany());
         $this->assertEquals(1, $result[0]);
     }
@@ -58,11 +53,7 @@ class ReferencedCollectionTest extends AbstractMongoStrategyTest
         $id = $this->createReference('name');
         $data = [$id];
 
-        /** @var DocumentManager $objectmanager */
-        $objectManager = $this->dm;
-        $metadata = $objectManager->getClassMetadata(get_class($user));
-        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'referenceMany');
-
+        $strategy = $this->getStrategy($this->dm, $user, 'referenceMany');
         $strategy->hydrate($data);
         $this->assertEquals('name', $user->getReferenceMany()[0]->getName());
     }

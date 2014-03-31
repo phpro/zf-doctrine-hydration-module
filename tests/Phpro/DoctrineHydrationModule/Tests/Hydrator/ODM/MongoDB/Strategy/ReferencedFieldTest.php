@@ -4,7 +4,6 @@ namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\ReferencedField;
 use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationReferenceOne;
 use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationUser;
-use Stubs\DocumentManager;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 
@@ -37,11 +36,7 @@ class ReferencedFieldTest extends AbstractMongoStrategyTest
         $referenced->setName('name');
         $user->setReferenceOne($referenced);
 
-        /** @var DocumentManager $objectmanager */
-        $objectManager = $this->dm;
-        $metadata = $objectManager->getClassMetadata(get_class($user));
-        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'referenceOne');
-
+        $strategy = $this->getStrategy($this->dm, $user, 'referenceOne');
         $result = $strategy->extract($user->getReferenceOne());
         $this->assertEquals(1, $result);
     }
@@ -58,11 +53,7 @@ class ReferencedFieldTest extends AbstractMongoStrategyTest
         $id = $this->createReference('name');
         $data = $id;
 
-        /** @var DocumentManager $objectmanager */
-        $objectManager = $this->dm;
-        $metadata = $objectManager->getClassMetadata(get_class($user));
-        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'referenceOne');
-
+        $strategy = $this->getStrategy($this->dm, $user, 'referenceOne');
         $result = $strategy->hydrate($data);
         $this->assertEquals('name', $result->getName());
     }

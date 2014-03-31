@@ -20,13 +20,15 @@ abstract class AbstractMongoStrategyTest extends BaseTest
     /**
      * @param $objectManager
      * @param $object
-     * @param $metadata
      * @param $fieldName
      *
      * @return StrategyInterface
      */
-    protected function getStrategy($objectManager, $object, $metadata, $fieldName)
+    protected function getStrategy($objectManager, $object, $fieldName)
     {
+        $objectClass = get_class($object);
+        $metadata = $objectManager->getClassMetadata($objectClass);
+
         $strategy = $this->createStrategy();
         $strategy->setObject($object);
         $strategy->setObjectManager($objectManager);

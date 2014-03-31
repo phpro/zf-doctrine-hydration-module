@@ -4,6 +4,8 @@
 This module provides a configurable way to create new doctrine hydrators.
 By using the configurable API, it is easy to create a custom hydrator for any use case you want.
 
+For ORM, the basic hydrator from the doctrine module is being used. It is possible to configure your own strategies for complex objects like referenced entities.
+
 For MongoDB ODM, a specific hydrator is added. This hydrator will be able to handle Referenced documents and Embedded Documents.
 It is also possible to hydrate advanced documents with discriminator maps.
 

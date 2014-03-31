@@ -2,8 +2,8 @@
 
 namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedField;
-use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationEmbedOne;
-use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationUser;
+use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedOne;
+use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 

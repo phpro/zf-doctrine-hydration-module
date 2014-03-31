@@ -3,11 +3,11 @@
 namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB;
 use Doctrine\ODM\MongoDB\Tests\BaseTest;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\DoctrineObject;
-use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationEmbedMany;
-use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationEmbedOne;
-use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationReferenceMany;
-use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationReferenceOne;
-use Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationUser;
+use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedMany;
+use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedOne;
+use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceMany;
+use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceOne;
+use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 
 /**
  * Class DoctrineObjectTest
@@ -117,10 +117,10 @@ class DoctrineObjectTest extends BaseTest
 
         $this->assertEquals(1, $user->getId());
         $this->assertEquals('user', $user->getName());
-        $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationReferenceOne', $user->getReferenceOne());
-        $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationReferenceMany', $user->getReferenceMany()[0]);
-        $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationEmbedOne', $user->getEmbedOne());
-        $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb\HydrationEmbedMany', $user->getEmbedMany()[0]);
+        $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceOne', $user->getReferenceOne());
+        $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceMany', $user->getReferenceMany()[0]);
+        $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedOne', $user->getEmbedOne());
+        $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedMany', $user->getEmbedMany()[0]);
         $this->assertEquals('name', $user->getReferenceOne()->getName());
         $this->assertEquals('name', $user->getReferenceMany()[0]->getName());
         $this->assertEquals('name', $user->getEmbedOne()->getName());

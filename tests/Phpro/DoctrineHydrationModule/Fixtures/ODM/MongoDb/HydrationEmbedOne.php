@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb;
+namespace Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 

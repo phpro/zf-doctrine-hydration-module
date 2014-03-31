@@ -56,3 +56,17 @@ From here on, you can get the hydrator by calling `get('hydrator-manager-key')` 
 - ReferencedField: Used for referenced fields.
 - EmbeddedReferenceCollection: This is a custom strategy that can be used in an API to display all fields in a referenced object. The hydration works as a regular referenced object.
 - EmbeddedReferenceField: This is a custom strategy that can be used in an API to display all fields in a referenced object. The hydration works as a regular referenced object.
+
+# Testing
+This package is fully tested with Cs fixer and PhpUnit. The MongoDB tests require mongodb to be installed on your machine. You can skip these tests by adding a testsuite to the command:
+```sh
+# Php coding standards:
+./vendor/bin/php-cs-fixer fix . --dry-run
+
+# Phpunit:
+./vendor/bin/phpunit -c"tests/phpunit.xml"
+
+# Testing one testsuite:
+./vendor/bin/phpunit -c"tests/phpunit.xml" --testsuite="Main"
+./vendor/bin/phpunit -c"tests/phpunit.xml" --testsuite="ODM"
+```

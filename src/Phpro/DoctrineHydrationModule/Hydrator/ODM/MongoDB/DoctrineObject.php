@@ -1,12 +1,4 @@
 <?php
-    /**
-     * Phpro ZF2 Library
-     *
-     * @link      http://fisheye.phpro.be/git/Git-Vlir-Uos.git
-     * @copyright Copyright (c) 2012 PHPro
-     * @license   http://opensource.org/licenses/gpl-license.php GNU Public License
-     *
-     */
 
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB;
 
@@ -14,6 +6,7 @@ use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as BaseHydrator;
 use DoctrineModule\Stdlib\Hydrator\Strategy as DoctrineStrategy;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\AbstractMongoStrategy;
+use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\DateTimeField;
 
 /**
  * Class DoctrineObject
@@ -30,13 +23,44 @@ class DoctrineObject extends BaseHydrator
      */
     protected function prepareStrategies()
     {
+        $this->prepareFieldStrategies();
+        $this->prepareAssociationStrategies();
+
+        // Call through for DI
+        parent::prepareStrategies();
+    }
+
+    /**
+     * Add custom strategies to specific field types
+     */
+    protected function prepareFieldStrategies()
+    {
+        $fields = $this->metadata->getFieldNames();
+        foreach ($fields as $field) {
+            if ($this->hasStrategy($field) || in_array($field, $this->metadata->getAssociationNames())) {
+                continue;
+            }
+
+            $fieldMeta = $this->metadata->fieldMappings[$field];
+            if (in_array($fieldMeta['type'], ['date', 'timestamp'])) {
+                $isTimestamp = ($fieldMeta['type'] == 'timestamp');
+                $this->addStrategy($field, new DateTimeField($isTimestamp));
+            }
+        }
+    }
+
+    /**
+     * Add custom strategies to association fields
+     */
+    protected function prepareAssociationStrategies()
+    {
         $associations = $this->metadata->getAssociationNames();
         foreach ($associations as $association) {
 
             // Add meta data to existing collections:
             if ($this->hasStrategy($association)) {
                 $strategy = $this->getStrategy($association);
-                $this->injectStrategyDependencies($strategy, $association);
+                $this->injectAssociationStrategyDependencies($strategy, $association);
                 continue;
             }
 
@@ -63,13 +87,10 @@ class DoctrineObject extends BaseHydrator
 
             // Add meta data
             if ($strategy) {
-                $this->injectStrategyDependencies($strategy, $association);
+                $this->injectAssociationStrategyDependencies($strategy, $association);
                 $this->addStrategy($association, $strategy);
             }
         }
-
-        // Call through for DI
-        parent::prepareStrategies();
     }
 
     /**
@@ -78,7 +99,7 @@ class DoctrineObject extends BaseHydrator
      * @param $strategy
      * @param $association
      */
-    protected function injectStrategyDependencies($strategy, $association)
+    protected function injectAssociationStrategyDependencies($strategy, $association)
     {
 
         if ($strategy instanceof DoctrineStrategy\AbstractCollectionStrategy) {

@@ -1,6 +1,10 @@
 <phpunit bootstrap="./Bootstrap.php" colors="true">
     <testsuites>
         <testsuite name="Main">
+            <file>./Phpro/DoctrineHydrationModule/Tests/ModuleTest.php</file>
+
+            <file>./Phpro/DoctrineHydrationModule/Tests/AbcTest.php</file>
+
             <directory>./Phpro/DoctrineHydrationModule/Tests/Service</directory>
             <file>./Phpro/DoctrineHydrationModule/Tests/Hydrator/DoctrineHydratorTest.php</file>
         </testsuite>

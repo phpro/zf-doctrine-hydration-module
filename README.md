@@ -52,6 +52,7 @@ From here on, you can get the hydrator by calling `get('hydrator-manager-key')` 
 
 #Custom strategies:
 ## MongoDB ODM
+- DateTimeField: Used for DateTime objects
 - EmbeddedCollection: Used for embedded collections
 - EmbeddedField: Used for embedded fields
 - ReferencedCollection: Used for referenced collections

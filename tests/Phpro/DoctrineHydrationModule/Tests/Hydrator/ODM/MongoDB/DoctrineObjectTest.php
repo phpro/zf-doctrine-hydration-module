@@ -52,9 +52,14 @@ class DoctrineObjectTest extends BaseTest
      */
     public function it_should_extract_a_document()
     {
+        $creationDate = new \DateTime();
+        $birthday = new \DateTime('1 january 2014');
+
         $user = new HydrationUser();
         $user->setId(1);
         $user->setName('user');
+        $user->setCreatedAt($creationDate->getTimestamp());
+        $user->setBirthday($birthday);
 
         $embedOne = new HydrationEmbedOne();
         $embedOne->setId(1);
@@ -81,6 +86,8 @@ class DoctrineObjectTest extends BaseTest
 
         $this->assertEquals(1, $result['id']);
         $this->assertEquals('user', $result['name']);
+        $this->assertEquals($creationDate->getTimestamp(), $result['createdAt']);
+        $this->assertEquals($birthday->getTimestamp(), $result['birthday']);
         $this->assertEquals(1, $result['embedOne']['id']);
         $this->assertEquals('name', $result['embedOne']['name']);
         $this->assertEquals(1, $result['embedMany'][0]['id']);
@@ -94,10 +101,15 @@ class DoctrineObjectTest extends BaseTest
      */
     public function it_should_hydrate_a_document()
     {
+        $creationDate = new \DateTime();
+        $birthday = new \DateTime('1 january 2014');
+
         $user = new HydrationUser();
         $data = [
             'id' => 1,
             'name' => 'user',
+            'creationDate' => $creationDate->getTimestamp(),
+            'birthday' => $birthday->getTimestamp(),
             'referenceOne' => $this->createReferenceOne('name'),
             'referenceMany' => [$this->createReferenceMany('name')],
             'embedOne' => [
@@ -117,6 +129,8 @@ class DoctrineObjectTest extends BaseTest
 
         $this->assertEquals(1, $user->getId());
         $this->assertEquals('user', $user->getName());
+        $this->assertEquals($creationDate->getTimestamp(), $user->getCreatedAt());
+        $this->assertEquals($birthday->getTimestamp(), $user->getBirthday()->getTimestamp());
         $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceOne', $user->getReferenceOne());
         $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceMany', $user->getReferenceMany()[0]);
         $this->assertInstanceOf('Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedOne', $user->getEmbedOne());

@@ -21,6 +21,18 @@ class HydrationUser
     public $name;
 
     /**
+     * @ODM\Date
+     * @var \DateTime
+     */
+    public $birthday;
+
+    /**
+     * @ODM\Timestamp
+     * @var \DateTime
+     */
+    public $createdAt;
+
+    /**
      * @ODM\ReferenceOne(targetDocument="HydrationReferenceOne")
      */
     public $referenceOne;
@@ -49,6 +61,9 @@ class HydrationUser
     {
         $this->embedMany = new ArrayCollection();
         $this->referenceMany = new ArrayCollection();
+
+        $now = new \DateTime();
+        $this->createdAt = $now->getTimestamp();
     }
 
     /**
@@ -186,4 +201,37 @@ class HydrationUser
     {
         return $this->name;
     }
+
+    /**
+     * @param mixed $birthday
+     */
+    public function setBirthday($birthday)
+    {
+        $this->birthday = $birthday;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * @param int $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
 }

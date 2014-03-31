@@ -9,7 +9,6 @@ namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 use Doctrine\Common\Collections\Collection;
 use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
-use Doctrine\ODM\MongoDB\PersistentCollection as MongoDbPersistentCollection;
 
 /**
  * Class PersistentCollection
@@ -28,11 +27,11 @@ class EmbeddedCollection extends AbstractMongoStrategy
     public function extract($value)
     {
         // Embedded Many
-        if (!($value instanceof MongoDbPersistentCollection)) {
-            throw new \Exception('Embedded collections need a persistent collection.');
+        if (!($value instanceof Collection)) {
+            throw new \Exception('Embedded collections should be a doctrine collection.');
         }
 
-        $mapping = $value->getMapping();
+        $mapping = $this->getClassMetadata()->fieldMappings[$this->getCollectionName()];
         $result = [];
         foreach ($value as $index => $object) {
             $hydrator = $this->getDoctrineHydrator($object);

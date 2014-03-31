@@ -1,6 +1,7 @@
 <?php
 
 namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
+use Doctrine\ODM\MongoDB\Tests\BaseTest;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
@@ -8,22 +9,13 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
  *
  * @package Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
  */
-abstract class AbstractMongoStrategyTest extends \PHPUnit_Framework_TestCase
+abstract class AbstractMongoStrategyTest extends BaseTest
 {
 
     /**
      * @return StrategyInterface
      */
     abstract protected function createStrategy();
-
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function stubObjectManager()
-    {
-        $objectManager = $this->getMock('Doctrine\ODM\MongoDB\DocumentManager', [], [], '', false);
-        return $objectManager;
-    }
 
     /**
      * @test
@@ -57,7 +49,7 @@ abstract class AbstractMongoStrategyTest extends \PHPUnit_Framework_TestCase
      */
     public function it_should_have_an_object_manager()
     {
-        $objectManager = $this->stubObjectManager();
+        $objectManager = $this->dm;
         $strategy = $this->createStrategy();
 
         $strategy->setObjectManager($objectManager);

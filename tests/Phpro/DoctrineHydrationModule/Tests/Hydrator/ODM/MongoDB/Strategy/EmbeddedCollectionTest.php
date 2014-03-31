@@ -41,12 +41,7 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         /** @var DocumentManager $objectmanager */
         $objectManager = $this->dm;
         $metadata = $objectManager->getClassMetadata(get_class($user));
-
-        $strategy = $this->createStrategy();
-        $strategy->setObject($user);
-        $strategy->setObjectManager($objectManager);
-        $strategy->setCollectionName('embedMany');
-        $strategy->setClassMetadata($metadata);
+        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'embedMany');
 
         $result = $strategy->extract($user->getEmbedMany());
         $this->assertEquals('name', $result[0]['name']);
@@ -71,12 +66,7 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         /** @var DocumentManager $objectmanager */
         $objectManager = $this->dm;
         $metadata = $objectManager->getClassMetadata(get_class($user));
-
-        $strategy = $this->createStrategy();
-        $strategy->setObject($user);
-        $strategy->setObjectManager($objectManager);
-        $strategy->setCollectionName('embedMany');
-        $strategy->setClassMetadata($metadata);
+        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'embedMany');
 
         $strategy->hydrate($data);
         $this->assertEquals('name', $user->getEmbedMany()[0]->getName());

@@ -18,6 +18,25 @@ abstract class AbstractMongoStrategyTest extends BaseTest
     abstract protected function createStrategy();
 
     /**
+     * @param $objectManager
+     * @param $object
+     * @param $metadata
+     * @param $fieldName
+     *
+     * @return StrategyInterface
+     */
+    protected function getStrategy($objectManager, $object, $metadata, $fieldName)
+    {
+        $strategy = $this->createStrategy();
+        $strategy->setObject($object);
+        $strategy->setObjectManager($objectManager);
+        $strategy->setCollectionName($fieldName);
+        $strategy->setClassMetadata($metadata);
+
+        return $strategy;
+    }
+
+    /**
      * @test
      */
     public function it_should_be_a_mongodb_strategy()

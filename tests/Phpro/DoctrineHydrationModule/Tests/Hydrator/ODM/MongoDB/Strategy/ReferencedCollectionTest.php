@@ -40,12 +40,7 @@ class ReferencedCollectionTest extends AbstractMongoStrategyTest
         /** @var DocumentManager $objectmanager */
         $objectManager = $this->dm;
         $metadata = $objectManager->getClassMetadata(get_class($user));
-
-        $strategy = $this->createStrategy();
-        $strategy->setObject($user);
-        $strategy->setObjectManager($objectManager);
-        $strategy->setCollectionName('referenceMany');
-        $strategy->setClassMetadata($metadata);
+        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'referenceMany');
 
         $result = $strategy->extract($user->getReferenceMany());
         $this->assertEquals(1, $result[0]);
@@ -61,22 +56,12 @@ class ReferencedCollectionTest extends AbstractMongoStrategyTest
         $user->setName('username');
 
         $id = $this->createReference('name');
-        $data = [
-            [
-                'id' => $id,
-                'name' => 'name'
-            ]
-        ];
+        $data = [$id];
 
         /** @var DocumentManager $objectmanager */
         $objectManager = $this->dm;
         $metadata = $objectManager->getClassMetadata(get_class($user));
-
-        $strategy = $this->createStrategy();
-        $strategy->setObject($user);
-        $strategy->setObjectManager($objectManager);
-        $strategy->setCollectionName('referenceMany');
-        $strategy->setClassMetadata($metadata);
+        $strategy = $this->getStrategy($objectManager, $user, $metadata, 'referenceMany');
 
         $strategy->hydrate($data);
         $this->assertEquals('name', $user->getReferenceMany()[0]->getName());

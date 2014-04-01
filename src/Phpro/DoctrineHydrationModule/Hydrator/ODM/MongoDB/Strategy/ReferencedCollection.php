@@ -32,9 +32,11 @@ class ReferencedCollection extends AbstractMongoStrategy
         $strategy->setCollectionName($this->getCollectionName());
 
         $result = [];
-        foreach ($value as $key => $record) {
-            $strategy->setObject($record);
-            $result[$key] = $strategy->extract($record);
+        if ($value) {
+            foreach ($value as $key => $record) {
+                $strategy->setObject($record);
+                $result[$key] = $strategy->extract($record);
+            }
         }
 
         return $result;

@@ -33,15 +33,17 @@ class EmbeddedCollection extends AbstractMongoStrategy
 
         $mapping = $this->getClassMetadata()->fieldMappings[$this->getCollectionName()];
         $result = [];
-        foreach ($value as $index => $object) {
-            $hydrator = $this->getDoctrineHydrator($object);
-            $result[$index] = $hydrator->extract($object);
+        if ($value) {
+            foreach ($value as $index => $object) {
+                $hydrator = $this->getDoctrineHydrator($object);
+                $result[$index] = $hydrator->extract($object);
 
-            // Add discrimator field if it can be found.
-            if (isset($mapping['discriminatorMap'])) {
-                $discriminatorName = array_search(get_class($object), $mapping['discriminatorMap']);
-                if ($discriminatorName) {
-                    $result[$index][$mapping['discriminatorField']] = $discriminatorName;
+                // Add discrimator field if it can be found.
+                if (isset($mapping['discriminatorMap'])) {
+                    $discriminatorName = array_search(get_class($object), $mapping['discriminatorMap']);
+                    if ($discriminatorName) {
+                        $result[$index][$mapping['discriminatorField']] = $discriminatorName;
+                    }
                 }
             }
         }
@@ -62,15 +64,17 @@ class EmbeddedCollection extends AbstractMongoStrategy
         $discriminatorMap = isset($mapping['discriminatorMap']) ? $mapping['discriminatorMap'] : array();
 
         $result = array();
-        foreach ($value as $data) {
-            // Use configured discriminator as discriminator class:
-            if ($discriminator && is_array($data)) {
-                if (isset($data[$discriminator]) && isset($discriminatorMap[$data[$discriminator]])) {
-                    $targetDocument = $discriminatorMap[$data[$discriminator]];
+        if ($value) {
+            foreach ($value as $data) {
+                // Use configured discriminator as discriminator class:
+                if ($discriminator && is_array($data)) {
+                    if (isset($data[$discriminator]) && isset($discriminatorMap[$data[$discriminator]])) {
+                        $targetDocument = $discriminatorMap[$data[$discriminator]];
+                    }
                 }
-            }
 
-            $result[] = $this->hydrateSingle($targetDocument, $data);
+                $result[] = $this->hydrateSingle($targetDocument, $data);
+            }
         }
 
         return $this->hydrateCollection($result);

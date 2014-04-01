@@ -52,10 +52,11 @@ class ReferencedCollection extends AbstractMongoStrategy
         $targetDocument = $mapping['targetDocument'];
 
         $result = array();
-        foreach ($value as $documentId) {
-            $result[] = $this->hydrateSingle($targetDocument, $documentId);
+        if ($value) {
+            foreach ($value as $documentId) {
+                $result[] = $this->hydrateSingle($targetDocument, $documentId);
+            }
         }
-
 
         return $this->hydrateCollection($result);
     }

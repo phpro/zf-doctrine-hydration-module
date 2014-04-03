@@ -30,6 +30,7 @@ class ReferencedField extends AbstractMongoStrategy
         }
 
         $idField = $this->metadata->getIdentifier();
+        $idField = is_array($idField) ? current($idField) : $idField;
         $getter = 'get' . ucfirst($idField);
 
         // Validate object:

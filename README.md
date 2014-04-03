@@ -33,11 +33,11 @@ return array(
     'doctrine-hydrator' => array(
         'hydrator-manager-key' => array(
             'entity_class' => 'App\Entity\EntityClass',
-            'object_manager' => 'object manager key in the service manager',
+            'object_manager' => 'doctrine.objectmanager.key.in.servicelocator',
             'by_value' => true,
-            'use_generated_hydrator' => true,
+            'use_generated_hydrator' => true, 
             'strategies' => [
-                'fieldname' => 'strategy key in service manager',
+                'fieldname' => 'custom.strategy.key.in.servicemanager',
             ],
         ),
     ),

@@ -36,6 +36,12 @@ class DefaultRelation extends AbstractMongoStrategy
      */
     public function hydrate($value)
     {
+        // Beware of the collection strategies:
+        $collection = $this->collectionName;
+        if ($this->metadata->isCollectionValuedAssociation($collection)) {
+            $value = $this->hydrateCollection($value);
+        }
+
         return $value;
     }
 

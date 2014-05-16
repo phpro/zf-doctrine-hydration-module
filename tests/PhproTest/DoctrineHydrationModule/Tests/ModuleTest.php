@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Tests;
+namespace PhproTest\DoctrineHydrationModule\Tests;
 use Phpro\DoctrineHydrationModule\Module;
 
 /**

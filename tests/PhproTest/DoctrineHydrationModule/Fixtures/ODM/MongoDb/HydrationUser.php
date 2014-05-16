@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb;
+namespace PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
@@ -8,7 +8,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 /**
  * Class HydrationUser
  *
- * @package Phpro\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb
+ * @package PhproTest\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb
  *
  * @ODM\Document
  */

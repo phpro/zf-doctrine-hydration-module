@@ -1,12 +1,12 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Tests\Hydrator;
+namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator;
 use Phpro\DoctrineHydrationModule\Hydrator\DoctrineHydrator;
 
 /**
  * Class DoctrineHydratorTest
  *
- * @package Phpro\DoctrineHydrationModule\Tests\Hydrator
+ * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator
  */
 class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
 {

@@ -1,31 +1,31 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
-use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedReferenceField;
-use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceOne;
-use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
+namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
+use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\ReferencedField;
+use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceOne;
+use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 
 /**
- * Class EmbeddedReferenceFieldTest
+ * Class ReferencedFieldTest
  *
- * @package Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
  */
-class EmbeddedReferenceFieldTest extends AbstractMongoStrategyTest
+class ReferencedFieldTest extends AbstractMongoStrategyTest
 {
     /**
      * @return StrategyInterface
      */
     protected function createStrategy()
     {
-        return new EmbeddedReferenceField();
+        return new ReferencedField();
     }
 
     /**
      * @test
      */
-    public function it_should_extract_embedded_fields()
+    public function it_should_extract_referenced_fields()
     {
         $user = new HydrationUser();
         $user->setId(1);
@@ -38,7 +38,7 @@ class EmbeddedReferenceFieldTest extends AbstractMongoStrategyTest
 
         $strategy = $this->getStrategy($this->dm, $user, 'referenceOne');
         $result = $strategy->extract($user->getReferenceOne());
-        $this->assertEquals('name', $result['name']);
+        $this->assertEquals(1, $result);
     }
 
     /**

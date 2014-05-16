@@ -1,11 +1,11 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb;
+namespace PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /** @ODM\Document */
-class HydrationReferenceOne
+class HydrationReferenceMany
 {
     /** @ODM\Id */
     public $id;

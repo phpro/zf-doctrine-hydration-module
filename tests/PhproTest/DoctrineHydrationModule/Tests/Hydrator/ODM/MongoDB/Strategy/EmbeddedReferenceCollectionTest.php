@@ -1,16 +1,16 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
+namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedReferenceCollection;
-use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceMany;
-use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
+use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceMany;
+use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 
 /**
  * Class EmbeddedReferenceCollectionTest
  *
- * @package Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
  */
 class EmbeddedReferenceCollectionTest extends AbstractMongoStrategyTest
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
+namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\DateTimeField;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
@@ -8,7 +8,7 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 /**
  * Class DateTimeFieldTest
  *
- * @package Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
  */
 class DateTimeFieldTest extends \PHPUnit_Framework_TestCase
 {

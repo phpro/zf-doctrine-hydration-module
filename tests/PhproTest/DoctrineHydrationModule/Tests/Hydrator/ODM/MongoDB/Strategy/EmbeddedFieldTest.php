@@ -1,16 +1,16 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
+namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedField;
-use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedOne;
-use Phpro\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
+use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedOne;
+use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 
 /**
  * Class EmbeddedFieldTest
  *
- * @package Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
  */
 class EmbeddedFieldTest extends AbstractMongoStrategyTest
 {

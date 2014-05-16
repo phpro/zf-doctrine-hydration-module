@@ -1,6 +1,6 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Tests\Service;
+namespace PhproTest\DoctrineHydrationModule\Tests\Service;
 
 use Phpro\DoctrineHydrationModule\Service\DoctrineHydratorFactory;
 use Zend\ServiceManager\ServiceManager;
@@ -9,7 +9,7 @@ use Zend\Stdlib\Hydrator\HydratorPluginManager;
 /**
  * Class DoctrineHydratorFactoryTest
  *
- * @package Phpro\DoctrineHydrationModule\Tests\Service
+ * @package PhproTest\DoctrineHydrationModule\Tests\Service
  */
 class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
 {

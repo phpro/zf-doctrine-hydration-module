@@ -28,8 +28,8 @@
       "doctrine/doctrine-mongo-odm-module": "*"
     },
     "autoload": {
-      "psr-0": {
-        "Phpro\\DoctrineHydrationModule": "src/"
+      "psr-4": {
+        "Phpro\\DoctrineHydrationModule\\": "src/Phpro/DoctrineHydrationModule/"
       }
     }
 }

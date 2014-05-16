@@ -1,13 +1,13 @@
 <?php
 
-namespace Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
+namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 use Doctrine\ODM\MongoDB\Tests\BaseTest;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class AbstractMongoStrategyTest
  *
- * @package Phpro\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
  */
 abstract class AbstractMongoStrategyTest extends BaseTest
 {

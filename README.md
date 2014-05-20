@@ -68,9 +68,9 @@ This package is fully tested with Cs fixer and PhpUnit. The MongoDB tests requir
 ./vendor/bin/php-cs-fixer fix . --dry-run
 
 # Phpunit:
-./vendor/bin/phpunit -c"tests/phpunit.xml"
+./vendor/bin/phpunit
 
 # Testing one testsuite:
-./vendor/bin/phpunit -c"tests/phpunit.xml" --testsuite="Main"
-./vendor/bin/phpunit -c"tests/phpunit.xml" --testsuite="ODM"
+./vendor/bin/phpunit --testsuite="Main"
+./vendor/bin/phpunit --testsuite="ODM"
 ```

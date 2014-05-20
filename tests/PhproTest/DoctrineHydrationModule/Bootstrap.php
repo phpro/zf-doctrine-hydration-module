@@ -4,9 +4,10 @@
 namespace PhproTest\DoctrineHydrationModule;
 
 error_reporting( E_ALL | E_STRICT );
-define('TEST_BASE_PATH', __DIR__ . '/../../');
+define('PROJECT_BASE_PATH', __DIR__ . '/../../..');
+define('TEST_BASE_PATH', __DIR__ . '/../..');
 
-$autoloadFile = __DIR__ . '/../../../vendor/autoload.php';
+$autoloadFile = PROJECT_BASE_PATH . '/vendor/autoload.php';
 if (!file_exists($autoloadFile)) {
     throw new \RuntimeException('Install dependencies to run test suite.');
 }
@@ -50,7 +51,7 @@ class Bootstrap
         $this->autoLoader->addPsr4('PhproTest\\DoctrineHydrationModule\\Fixtures\\', __DIR__ . '/Fixtures/');
 
         $this->autoLoader->addClassMap([
-            'Doctrine\\ODM\\MongoDB\\Tests\\BaseTest' => __DIR__ . '/../../../vendor/doctrine/mongodb-odm/tests/Doctrine/ODM/MongoDB/Tests/BaseTest.php',
+            'Doctrine\\ODM\\MongoDB\\Tests\\BaseTest' => PROJECT_BASE_PATH . '/vendor/doctrine/mongodb-odm/tests/Doctrine/ODM/MongoDB/Tests/BaseTest.php',
         ]);
     }
 

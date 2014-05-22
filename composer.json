@@ -13,7 +13,6 @@
             "email": "toon.verwerft@phpro.be"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
       "doctrine/common": ">=2.1",
       "zendframework/zend-modulemanager": "2.*",

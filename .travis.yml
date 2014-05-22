@@ -11,7 +11,6 @@ matrix:
 before_script:
   - phpenv config-add .travis-config.ini
   - composer self-update
-  - pecl install -f mongo-1.4.1
   - composer install --dev --prefer-source
 
 # Add PSR-4 support when https://github.com/fabpot/PHP-CS-Fixer/issues/311 is solved

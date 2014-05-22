@@ -29,7 +29,8 @@
     },
     "autoload": {
       "psr-4": {
-        "Phpro\\DoctrineHydrationModule\\": "src/Phpro/DoctrineHydrationModule/"
+        "Phpro\\DoctrineHydrationModule\\": "src/",
+        "PhproTest\\DoctrineHydrationModule\\": "test/src/"
       }
     }
 }

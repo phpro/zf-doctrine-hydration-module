@@ -13,7 +13,6 @@
             "email": "toon.verwerft@phpro.be"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
       "doctrine/common": ">=2.1",
       "zendframework/zend-modulemanager": "2.*",
@@ -25,7 +24,8 @@
       "fabpot/PHP-CS-Fixer": "*",
       "phpunit/phpunit": "*",
       "doctrine/doctrine-orm-module": "*",
-      "doctrine/doctrine-mongo-odm-module": "*"
+      "doctrine/doctrine-mongo-odm-module": "*",
+      "doctrine/mongodb-odm": "@dev"
     },
     "autoload": {
       "psr-4": {

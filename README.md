@@ -65,7 +65,8 @@ From here on, you can get the hydrator by calling `get('hydrator-manager-key')` 
 This package is fully tested with Cs fixer and PhpUnit. The MongoDB tests require mongodb to be installed on your machine. You can skip these tests by adding a testsuite to the command:
 ```sh
 # Php coding standards:
-./vendor/bin/php-cs-fixer fix . --dry-run
+# (The files are loaded according to the PSR-4 standard. The PSR-0 fix will fail!)
+./vendor/bin/php-cs-fixer fix . --dry-run  --fixers=-psr0
 
 # Phpunit:
 ./vendor/bin/phpunit

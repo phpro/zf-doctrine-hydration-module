@@ -65,7 +65,7 @@ class EmbeddedCollection extends AbstractMongoStrategy
 
         $result = array();
         if ($value) {
-            foreach ($value as $data) {
+            foreach ($value as $key => $data) {
                 // Use configured discriminator as discriminator class:
                 if ($discriminator && is_array($data)) {
                     if (isset($data[$discriminator]) && isset($discriminatorMap[$data[$discriminator]])) {
@@ -73,7 +73,7 @@ class EmbeddedCollection extends AbstractMongoStrategy
                     }
                 }
 
-                $result[] = $this->hydrateSingle($targetDocument, $data);
+                $result[$key] = $this->hydrateSingle($targetDocument, $data);
             }
         }
 

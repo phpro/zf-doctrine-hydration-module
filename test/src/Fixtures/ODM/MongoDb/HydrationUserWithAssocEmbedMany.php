@@ -12,7 +12,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  *
  * @ODM\Document
  */
-class HydrationUser
+class HydrationUserWithAssocEmbedMany
 {
     /** @ODM\Id */
     public $id;
@@ -103,8 +103,8 @@ class HydrationUser
      */
     public function addEmbedMany($embedMany)
     {
-        foreach ($embedMany as $record) {
-            $this->embedMany->add($record);
+        foreach ($embedMany as $key => $record) {
+            $this->embedMany->set($key, $record);
         }
     }
 
@@ -113,8 +113,8 @@ class HydrationUser
      */
     public function removeEmbedMany($embedMany)
     {
-        foreach ($embedMany as $record) {
-            $this->embedMany->removeElement($record);
+        foreach ($embedMany as $key => $record) {
+            $this->embedMany->remove($key);
         }
     }
 
@@ -139,8 +139,8 @@ class HydrationUser
      */
     public function addReferenceMany($referenceMany)
     {
-        foreach ($referenceMany as $record) {
-            $this->referenceMany->add($record);
+        foreach ($referenceMany as $key => $record) {
+            $this->referenceMany->set($key, $record);
         }
     }
 
@@ -149,8 +149,8 @@ class HydrationUser
      */
     public function removeReferenceMany($referenceMany)
     {
-        foreach ($referenceMany as $record) {
-            $this->referenceMany->removeElement($record);
+        foreach ($referenceMany as $key => $record) {
+            $this->referenceMany->remove($key);
         }
     }
 

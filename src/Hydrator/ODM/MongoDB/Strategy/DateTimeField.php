@@ -16,7 +16,7 @@ class DateTimeField implements StrategyInterface
     /**
      * @var boolean
      */
-    protected $isTimestam;
+    protected $isTimestamp;
 
     /**
      * @param $isTimestamp

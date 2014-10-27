@@ -5,6 +5,7 @@ namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedCollection;
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedMany;
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
+use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUserWithAssocEmbedMany;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 
@@ -61,6 +62,28 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         $strategy = $this->getStrategy($this->dm, $user, 'embedMany');
         $strategy->hydrate($data);
         $this->assertEquals('name', $user->getEmbedMany()[0]->getName());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_hydrate_embedded_collections_with_associated_array()
+    {
+        $user = new HydrationUserWithAssocEmbedMany();
+        $user->setId(1);
+        $user->setName('username');
+
+        $data = [
+            'user1' => [
+                'id' => 1,
+                'name' => 'name'
+            ]
+        ];
+
+        $strategy = $this->getStrategy($this->dm, $user, 'embedMany');
+        $strategy->hydrate($data);
+        $this->assertTrue($user->getEmbedMany()->containsKey('user1'));
+        $this->assertEquals('name', $user->getEmbedMany()->get('user1')->getName());
     }
 
 }

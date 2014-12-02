@@ -18,6 +18,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 use Zend\Stdlib\Hydrator\StrategyEnabledInterface;
+use Zend\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface;
 
 /**
  * Class DoctrineHydratorFactory
@@ -215,7 +216,32 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      */
     protected function configureHydratorStrategies($hydrator, ServiceLocatorInterface $serviceManager, $config, $objectManager)
     {
-        if (!($hydrator instanceof StrategyEnabledInterface) || !isset($config['strategies'])) {
+        if (!$hydrator instanceof StrategyEnabledInterface) {
+            return;
+        }
+
+        if (isset($config['naming_strategy'])) {
+            $namingStrategyKey = $config['naming_strategy'];
+
+            if (!$serviceManager->has($namingStrategyKey)) {
+                throw new ServiceNotCreatedException(sprintf('Invalid naming strategy %s for field %s', $namingStrategyKey, $field));
+            }
+
+            $namingStrategy = $serviceManager->get($namingStrategyKey);
+
+            if (!$namingStrategy instanceof NamingStrategyInterface) {
+                throw new ServiceNotCreatedException(sprintf('Invalid naming strategy class %s', get_class($namingStrategy)));
+            }
+
+            // Attach object manager:
+            if ($namingStrategy instanceof ObjectManagerAwareInterface) {
+                $namingStrategy->setObjectManager($objectManager);
+            }
+
+            $hydrator->setNamingStrategy($namingStrategy);
+        }
+
+        if( isset($config['strategies']) ) {
             return;
         }
 

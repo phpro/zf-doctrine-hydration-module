@@ -19,6 +19,7 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 use Zend\Stdlib\Hydrator\StrategyEnabledInterface;
 use Zend\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface;
+use Zend\Stdlib\Hydrator\NamingStrategyEnabledInterface;
 
 /**
  * Class DoctrineHydratorFactory
@@ -202,6 +203,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
             $hydrator = new Hydrator\DoctrineObject($objectManager, $config['by_value']);
         }
 
+        $this->configureHydratorNamingStrategy($hydrator, $serviceManager, $config, $objectManager);
         $this->configureHydratorStrategies($hydrator, $serviceManager, $config, $objectManager);
         return $hydrator;
     }
@@ -214,34 +216,43 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      *
      * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
      */
-    protected function configureHydratorStrategies($hydrator, ServiceLocatorInterface $serviceManager, $config, $objectManager)
+    public function configureHydratorNamingStrategy($hydrator, ServiceLocatorInterface $serviceManager, $config, $objectManager)
     {
-        if (!$hydrator instanceof StrategyEnabledInterface) {
+        if (!($hydrator instanceof NamingStrategyEnabledInterface) || !isset($config['naming_strategy'])) {
             return;
         }
+        
+        $namingStrategyKey = $config['naming_strategy'];
 
-        if (isset($config['naming_strategy'])) {
-            $namingStrategyKey = $config['naming_strategy'];
-
-            if (!$serviceManager->has($namingStrategyKey)) {
-                throw new ServiceNotCreatedException(sprintf('Invalid naming strategy %s for field %s', $namingStrategyKey, $field));
-            }
-
-            $namingStrategy = $serviceManager->get($namingStrategyKey);
-
-            if (!$namingStrategy instanceof NamingStrategyInterface) {
-                throw new ServiceNotCreatedException(sprintf('Invalid naming strategy class %s', get_class($namingStrategy)));
-            }
-
-            // Attach object manager:
-            if ($namingStrategy instanceof ObjectManagerAwareInterface) {
-                $namingStrategy->setObjectManager($objectManager);
-            }
-
-            $hydrator->setNamingStrategy($namingStrategy);
+        if (!$serviceManager->has($namingStrategyKey)) {
+            throw new ServiceNotCreatedException(sprintf('Invalid naming strategy %s for field %s', $namingStrategyKey, $field));
         }
 
-        if( isset($config['strategies']) ) {
+        $namingStrategy = $serviceManager->get($namingStrategyKey);
+
+        if (!$namingStrategy instanceof NamingStrategyInterface) {
+            throw new ServiceNotCreatedException(sprintf('Invalid naming strategy class %s', get_class($namingStrategy)));
+        }
+
+        // Attach object manager:
+        if ($namingStrategy instanceof ObjectManagerAwareInterface) {
+            $namingStrategy->setObjectManager($objectManager);
+        }
+
+        $hydrator->setNamingStrategy($namingStrategy);
+    }
+
+    /**
+     * @param                         $hydrator
+     * @param ServiceLocatorInterface $serviceManager
+     * @param                         $config
+     * @param                         $objectManager
+     *
+     * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
+     */
+    protected function configureHydratorStrategies($hydrator, ServiceLocatorInterface $serviceManager, $config, $objectManager)
+    {
+        if (!($hydrator instanceof StrategyEnabledInterface) || !isset($config['strategies'])) {
             return;
         }
 

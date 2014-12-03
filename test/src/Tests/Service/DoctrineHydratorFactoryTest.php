@@ -40,6 +40,7 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
         $this->serviceManager->setAllowOverride(true);
         $this->serviceManager->setService('Config', $this->serviceConfig);
         $this->serviceManager->setService('custom.strategy', $this->getMock('Zend\Stdlib\Hydrator\Strategy\StrategyInterface'));
+        $this->serviceManager->setService('custom.naming_strategy', $this->getMock('Zend\Stdlib\Hydrator\Strategy\StrategyInterface'));
 
         $this->hydratorManager = $this->getMock('Zend\Stdlib\Hydrator\HydratorPluginManager');
         $this->hydratorManager

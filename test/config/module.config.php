@@ -9,6 +9,12 @@ return array(
             'strategies' => [
                 'fieldname' => 'custom.strategy',
             ],
+            'filters' => [
+                'custom.filter.name' => [
+                    'condition' => 'and', //FilterComposite::CONDITION_AND,
+                    'filter' => 'custom.filter',
+                ],
+            ],
         ),
     ),
 );

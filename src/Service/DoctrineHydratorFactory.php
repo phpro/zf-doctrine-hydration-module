@@ -15,8 +15,10 @@ use Zend\ServiceManager\AbstractFactoryInterface;
 use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Stdlib\Exception\InvalidCallbackException;
 use Zend\Stdlib\Hydrator\AbstractHydrator;
 use Zend\Stdlib\Hydrator\Filter\FilterComposite;
+use Zend\Stdlib\Hydrator\Filter\FilterInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 use Zend\Stdlib\Hydrator\StrategyEnabledInterface;
@@ -246,62 +248,57 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      *
      * To configure filters:
      *
-     *     'doctrine-hydrator' => array(
-     *         'Acme\\V1\\Rest\\User\\UserHydrator' => array (
+     *     'doctrine-hydrator' => [
+     *         'Acme\\V1\\Rest\\User\\UserHydrator' => [
      *             //.. other hydrator config e.g. 'strategies'
-     *             'filters' => array(
-     *                 // a service...
-     *                 'Acme\\V1\\Rest\\Person\\PersonFilter',
-     *                 // .. or a lambda / anonymous function ...
-     *                 'password' => function($field) {
-     *                     return true; // will always exclude the field
-     *                 },
-     *                 // ... or an array
-     *                 array(
-     *                     'filter'    => 'service' // or lambda,
-     *                     'condition' => FilterComposite::CONDITION_AND, // default is OR
-     *                 ),
-     *             ),
-     *         ),
-     *     ),
+     *             'filters' => [
+     *                 'custom_filter_name' => [
+     *                     'condition' => 'and', // optional, default is 'or'
+     *                     'filter'    => 'Filter\\Key\\In\\ServiceManager',
+     *                 ],
+     *             ],
+     *         ],
+     *     ],
      *
-     * @param AbstractHydrator $hydrator
-     * @param ServiceLocatorInterface $serviceManager
-     * @param                         $config
-     * @param                         $objectManager
-     * @return \Zend\Stdlib\Hydrator\AbstractHydrator
+     * @param  AbstractHydrator        $hydrator
+     * @param  ServiceLocatorInterface $serviceManager
+     * @param                          $config
+     * @param                          $objectManager
+     * @return AbstractHydrator
      */
     protected function configureHydratorFilters($hydrator, $serviceManager, $config, $objectManager)
     {
-        if(isset($config['filters']) && is_array($config['filters'])){
-            foreach($config['filters'] as $name => $filterConfig) {
-                $condition = FilterComposite::CONDITION_OR;
-                if(is_callable($filterConfig)) {
-                    // allows lambdas directly in the config
-                    $callback = $filterConfig;
-                } else {
-                    if(!is_array($filterConfig)) {
-                        $filterConfig = array(
-                            'filter' => $filterConfig
-                        );
-                    }
-                    if(isset($filterConfig['condition'])) {
-                        $condition = $filterConfig['condition'];
-                    }
-                    $callback = $filterConfig['filter'];
-                    if(!is_callable($callback)) {
-                        if(!$serviceManager->has($callback)) {
-                            throw new ServiceNotCreatedException(sprintf('Invalid filter %s for field %s', $callback, $name));
-                        }
-                        $callback = $serviceManager->get($callback);
-                        if($callback instanceof ObjectManagerAwareInterface) {
-                            $callback->setObjectManager($objectManager);
-                        }
-                    }
+        if (isset($config['filters']) && is_array($config['filters'])) {
+            foreach ($config['filters'] as $name => $filterConfig) {
+                $conditionMap = [
+                    'and' => FilterComposite::CONDITION_AND,
+                    'or'  => FilterComposite::CONDITION_OR,
+                ];
+                $condition = isset($filterConfig['condition']) ?
+                                $conditionMap[$filterConfig['condition']] :
+                                FilterComposite::CONDITION_OR;
+
+                $filterService = $filterConfig['filter'];
+                if (!$serviceManager->has($filterService)) {
+                    throw new ServiceNotCreatedException(
+                        sprintf('Invalid filter %s for field %s: service does not exist', $filterService, $name)
+                    );
                 }
-                $hydrator->addFilter($name, $callback, $condition);
+
+                $filterService = $serviceManager->get($filterService);
+                if (!$filterService instanceof FilterInterface) {
+                    throw new InvalidCallbackException(
+                        sprintf('Filter service %s must implement FilterInterface'), get_class($filterService)
+                    );
+                }
+
+                if ($filterService instanceof ObjectManagerAwareInterface) {
+                    $filterService->setObjectManager($objectManager);
+                }
+                $hydrator->addFilter($name, $filterService, $condition);
             }
         }
+
         return $hydrator;
     }
 }

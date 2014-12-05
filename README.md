@@ -43,7 +43,7 @@ return array(
             'filters' => [
                 'custom_filter_name' => [
                     'condition' => 'and', // optional, default is 'or'
-                    'filter'    => 'Filter\\Key\\In\\ServiceManager',
+                    'filter'    => 'custom.hydrator.filter.key.in.servicemanager',
                 ],
             ],
         ),

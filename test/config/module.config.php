@@ -6,6 +6,7 @@ return array(
             'object_manager' => 'doctrine.default.object-manager',
             'by_value' => true,
             'use_generated_hydrator' => false,
+            'naming_strategy' => 'custom.naming_strategy',
             'strategies' => [
                 'fieldname' => 'custom.strategy',
             ],

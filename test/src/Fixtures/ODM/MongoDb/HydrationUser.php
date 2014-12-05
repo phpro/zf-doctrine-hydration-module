@@ -233,5 +233,4 @@ class HydrationUser
     {
         return $this->createdAt;
     }
-
 }

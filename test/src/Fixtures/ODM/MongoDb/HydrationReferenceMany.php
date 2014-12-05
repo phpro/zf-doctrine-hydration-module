@@ -44,5 +44,4 @@ class HydrationReferenceMany
     {
         return $this->name;
     }
-
 }

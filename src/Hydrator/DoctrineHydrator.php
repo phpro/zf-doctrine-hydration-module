@@ -16,7 +16,6 @@ use Zend\Stdlib\Hydrator\HydratorInterface;
 class DoctrineHydrator
     implements HydratorInterface
 {
-
     /**
      * @var HydratorInterface
      */
@@ -56,7 +55,7 @@ class DoctrineHydrator
     /**
      * Extract values from an object
      *
-     * @param  object $object
+     * @param object $object
      *
      * @return array
      */
@@ -68,14 +67,14 @@ class DoctrineHydrator
     /**
      * Hydrate $object with the provided $data.
      *
-     * @param  array  $data
-     * @param  object $object
+     * @param array  $data
+     * @param object $object
      *
      * @return object
      */
      public function hydrate(array $data, $object)
      {
-        // Zend hydrator:
+         // Zend hydrator:
         if ($this->hydrateService instanceof HydratorInterface) {
             return $this->hydrateService->hydrate($data, $object);
         }

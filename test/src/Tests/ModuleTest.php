@@ -1,6 +1,7 @@
 <?php
 
 namespace PhproTest\DoctrineHydrationModule\Tests;
+
 use Phpro\DoctrineHydrationModule\Module;
 
 /**
@@ -10,7 +11,6 @@ use Phpro\DoctrineHydrationModule\Module;
  */
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @test
      */

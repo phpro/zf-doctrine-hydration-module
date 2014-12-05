@@ -6,7 +6,6 @@
 
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
-
 /**
  * Class PersistentCollection
  *
@@ -14,7 +13,6 @@ namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
  */
 class EmbeddedReferenceField extends AbstractMongoStrategy
 {
-
     /**
      * @param mixed $value
      *
@@ -47,7 +45,7 @@ class EmbeddedReferenceField extends AbstractMongoStrategy
         if ($this->getObject()) {
             $strategy->setObject($this->getObject());
         }
+
         return $strategy->hydrate($value);
     }
-
 }

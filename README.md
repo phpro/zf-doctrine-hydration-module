@@ -35,9 +35,16 @@ return array(
             'entity_class' => 'App\Entity\EntityClass',
             'object_manager' => 'doctrine.objectmanager.key.in.servicelocator',
             'by_value' => true,
-            'use_generated_hydrator' => true, 
+            'use_generated_hydrator' => true,
+            'naming_strategy' => 'custom.naming.strategy.key.in.servicemanager',
             'strategies' => [
                 'fieldname' => 'custom.strategy.key.in.servicemanager',
+            ],
+            'filters' => [
+                'custom_filter_name' => [
+                    'condition' => 'and', // optional, default is 'or'
+                    'filter'    => 'custom.hydrator.filter.key.in.servicemanager',
+                ],
             ],
         ),
     ),

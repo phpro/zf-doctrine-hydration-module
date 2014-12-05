@@ -12,7 +12,6 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
  */
 class DateTimeField implements StrategyInterface
 {
-
     /**
      * @var boolean
      */
@@ -49,7 +48,7 @@ class DateTimeField implements StrategyInterface
     {
         $datetime = $this->convertToDateTime($value);
         if (!$datetime) {
-            return null;
+            return;
         }
 
         if ($this->isTimestamp) {
@@ -75,21 +74,23 @@ class DateTimeField implements StrategyInterface
         if ($value instanceof \MongoDate) {
             $datetime = new \DateTime();
             $datetime->setTimestamp($value->sec);
+
             return $datetime;
         }
 
         if (is_numeric($value)) {
             $datetime = new \DateTime();
             $datetime->setTimestamp($value);
+
             return $datetime;
         }
 
         if (is_string($value) && !empty($value)) {
             $datetime = new \DateTime($value);
+
             return $datetime;
         }
 
-        return null;
+        return;
     }
-
 }

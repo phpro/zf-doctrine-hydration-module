@@ -1,6 +1,7 @@
 <?php
 
 namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator;
+
 use Phpro\DoctrineHydrationModule\Hydrator\DoctrineHydrator;
 
 /**
@@ -10,7 +11,6 @@ use Phpro\DoctrineHydrationModule\Hydrator\DoctrineHydrator;
  */
 class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @param null $hydrateService
      * @param null $extractService
@@ -112,5 +112,4 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($object, $result);
     }
-
 }

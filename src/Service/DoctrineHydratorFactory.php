@@ -19,9 +19,12 @@ use Zend\Stdlib\Exception\InvalidCallbackException;
 use Zend\Stdlib\Hydrator\AbstractHydrator;
 use Zend\Stdlib\Hydrator\Filter\FilterComposite;
 use Zend\Stdlib\Hydrator\Filter\FilterInterface;
+use Zend\Stdlib\Hydrator\FilterEnabledInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 use Zend\Stdlib\Hydrator\StrategyEnabledInterface;
+use Zend\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface;
+use Zend\Stdlib\Hydrator\NamingStrategyEnabledInterface;
 
 /**
  * Class DoctrineHydratorFactory
@@ -30,9 +33,7 @@ use Zend\Stdlib\Hydrator\StrategyEnabledInterface;
  */
 class DoctrineHydratorFactory implements AbstractFactoryInterface
 {
-
     const FACTORY_NAMESPACE = 'doctrine-hydrator';
-
 
     const OBJECT_MANAGER_TYPE_ODM_MONGODB = 'ODM/MongoDB';
     const OBJECT_MANAGER_TYPE_ORM = 'ORM';
@@ -70,6 +71,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         $namespace = self::FACTORY_NAMESPACE;
         if (!isset($config[$namespace]) || !is_array($config[$namespace]) || !isset($config[$namespace][$requestedName])) {
             $this->lookupCache[$requestedName] = false;
+
             return false;
         }
 
@@ -93,6 +95,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         $this->lookupCache[$requestedName] = true;
+
         return true;
     }
 
@@ -126,6 +129,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         $hydrator = new DoctrineHydrator($extractService, $hydrateService);
+
         return $hydrator;
     }
 
@@ -145,7 +149,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
             return self::OBJECT_MANAGER_TYPE_ORM;
         }
 
-        throw new ServiceNotCreatedException('Unknown object manager type: ' . get_class($objectManager));
+        throw new ServiceNotCreatedException('Unknown object manager type: '.get_class($objectManager));
     }
 
     /**
@@ -162,6 +166,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         $objectManager = $serviceManager->get($config['object_manager']);
+
         return $objectManager;
     }
 
@@ -176,14 +181,11 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     {
         $objectManagerType = $this->getObjectManagerType($objectManager);
         if ($objectManagerType != self::OBJECT_MANAGER_TYPE_ODM_MONGODB) {
-            return null;
+            return;
         }
 
         $hydratorFactory = $objectManager->getHydratorFactory();
         $hydrator = $hydratorFactory->getHydratorFor($config['entity_class']);
-
-        // Configure hydrator:
-        $this->configureHydratorStrategies($hydrator, $serviceManager, $config, $objectManager);
 
         return $hydrator;
     }
@@ -191,7 +193,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     /**
      * @param ServiceLocatorInterface $serviceManager
      * @param                         $config
-     * @param ObjectManager $objectManager
+     * @param ObjectManager           $objectManager
      *
      * @return HydratorInterface
      */
@@ -205,9 +207,43 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
             $hydrator = new Hydrator\DoctrineObject($objectManager, $config['by_value']);
         }
 
+        $this->configureHydratorNamingStrategy($hydrator, $serviceManager, $config, $objectManager);
         $this->configureHydratorStrategies($hydrator, $serviceManager, $config, $objectManager);
         $this->configureHydratorFilters($hydrator, $serviceManager, $config, $objectManager);
+
         return $hydrator;
+    }
+
+    /**
+     * @param                         $hydrator
+     * @param ServiceLocatorInterface $serviceManager
+     * @param                         $config
+     * @param                         $objectManager
+     *
+     * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
+     */
+    public function configureHydratorNamingStrategy($hydrator, ServiceLocatorInterface $serviceManager, $config, $objectManager)
+    {
+        if (!($hydrator instanceof NamingStrategyEnabledInterface) || !isset($config['naming_strategy'])) {
+            return;
+        }
+
+        $namingStrategyKey = $config['naming_strategy'];
+        if (!$serviceManager->has($namingStrategyKey)) {
+            throw new ServiceNotCreatedException(sprintf('Invalid naming strategy %s.', $namingStrategyKey));
+        }
+
+        $namingStrategy = $serviceManager->get($namingStrategyKey);
+        if (!$namingStrategy instanceof NamingStrategyInterface) {
+            throw new ServiceNotCreatedException(sprintf('Invalid naming strategy class %s', get_class($namingStrategy)));
+        }
+
+        // Attach object manager:
+        if ($namingStrategy instanceof ObjectManagerAwareInterface) {
+            $namingStrategy->setObjectManager($objectManager);
+        }
+
+        $hydrator->setNamingStrategy($namingStrategy);
     }
 
     /**
@@ -220,7 +256,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      */
     protected function configureHydratorStrategies($hydrator, ServiceLocatorInterface $serviceManager, $config, $objectManager)
     {
-        if (!($hydrator instanceof StrategyEnabledInterface) || !isset($config['strategies'])) {
+        if (!($hydrator instanceof StrategyEnabledInterface) || !isset($config['strategies']) || !is_array($config['strategies'])) {
             return;
         }
 
@@ -246,59 +282,44 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     /**
      * Add filters to the Hydrator based on a predefined configuration format, if specified.
      *
-     * To configure filters:
-     *
-     *     'doctrine-hydrator' => [
-     *         'Acme\\V1\\Rest\\User\\UserHydrator' => [
-     *             //.. other hydrator config e.g. 'strategies'
-     *             'filters' => [
-     *                 'custom_filter_name' => [
-     *                     'condition' => 'and', // optional, default is 'or'
-     *                     'filter'    => 'Filter\\Key\\In\\ServiceManager',
-     *                 ],
-     *             ],
-     *         ],
-     *     ],
-     *
-     * @param  AbstractHydrator        $hydrator
-     * @param  ServiceLocatorInterface $serviceManager
-     * @param                          $config
-     * @param                          $objectManager
-     * @return AbstractHydrator
+     * @param AbstractHydrator        $hydrator
+     * @param ServiceLocatorInterface $serviceManager
+     * @param                         $config
+     * @param                         $objectManager
      */
     protected function configureHydratorFilters($hydrator, $serviceManager, $config, $objectManager)
     {
-        if (isset($config['filters']) && is_array($config['filters'])) {
-            foreach ($config['filters'] as $name => $filterConfig) {
-                $conditionMap = [
-                    'and' => FilterComposite::CONDITION_AND,
-                    'or'  => FilterComposite::CONDITION_OR,
-                ];
-                $condition = isset($filterConfig['condition']) ?
-                                $conditionMap[$filterConfig['condition']] :
-                                FilterComposite::CONDITION_OR;
-
-                $filterService = $filterConfig['filter'];
-                if (!$serviceManager->has($filterService)) {
-                    throw new ServiceNotCreatedException(
-                        sprintf('Invalid filter %s for field %s: service does not exist', $filterService, $name)
-                    );
-                }
-
-                $filterService = $serviceManager->get($filterService);
-                if (!$filterService instanceof FilterInterface) {
-                    throw new InvalidCallbackException(
-                        sprintf('Filter service %s must implement FilterInterface'), get_class($filterService)
-                    );
-                }
-
-                if ($filterService instanceof ObjectManagerAwareInterface) {
-                    $filterService->setObjectManager($objectManager);
-                }
-                $hydrator->addFilter($name, $filterService, $condition);
-            }
+        if (!($hydrator instanceof FilterEnabledInterface) || !isset($config['filters']) || !is_array($config['filters'])) {
+            return;
         }
 
-        return $hydrator;
+        foreach ($config['filters'] as $name => $filterConfig) {
+            $conditionMap = [
+                'and' => FilterComposite::CONDITION_AND,
+                'or'  => FilterComposite::CONDITION_OR,
+            ];
+            $condition = isset($filterConfig['condition']) ?
+                            $conditionMap[$filterConfig['condition']] :
+                            FilterComposite::CONDITION_OR;
+
+            $filterService = $filterConfig['filter'];
+            if (!$serviceManager->has($filterService)) {
+                throw new ServiceNotCreatedException(
+                    sprintf('Invalid filter %s for field %s: service does not exist', $filterService, $name)
+                );
+            }
+
+            $filterService = $serviceManager->get($filterService);
+            if (!$filterService instanceof FilterInterface) {
+                throw new InvalidCallbackException(
+                    sprintf('Filter service %s must implement FilterInterface'), get_class($filterService)
+                );
+            }
+
+            if ($filterService instanceof ObjectManagerAwareInterface) {
+                $filterService->setObjectManager($objectManager);
+            }
+            $hydrator->addFilter($name, $filterService, $condition);
+        }
     }
 }

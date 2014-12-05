@@ -7,7 +7,6 @@
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
-use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
 
 /**
@@ -17,7 +16,6 @@ use DoctrineModule\Stdlib\Hydrator;
  */
 class ReferencedField extends AbstractMongoStrategy
 {
-
     /**
      * @param mixed $value
      *
@@ -31,7 +29,7 @@ class ReferencedField extends AbstractMongoStrategy
 
         $idField = $this->metadata->getIdentifier();
         $idField = is_array($idField) ? current($idField) : $idField;
-        $getter = 'get' . ucfirst($idField);
+        $getter = 'get'.ucfirst($idField);
 
         // Validate object:
         $rc = new \ReflectionClass($value);
@@ -58,5 +56,4 @@ class ReferencedField extends AbstractMongoStrategy
 
         return $this->findTargetDocument($targetDocument, $value);
     }
-
 }

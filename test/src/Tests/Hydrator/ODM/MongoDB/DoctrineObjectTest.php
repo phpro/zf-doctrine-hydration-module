@@ -1,6 +1,7 @@
 <?php
 
 namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB;
+
 use Doctrine\ODM\MongoDB\Tests\BaseTest;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\DoctrineObject;
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedMany;
@@ -16,7 +17,6 @@ use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
  */
 class DoctrineObjectTest extends BaseTest
 {
-
     /**
      * @param null $objectManager
      *
@@ -26,6 +26,7 @@ class DoctrineObjectTest extends BaseTest
     {
         $objectManager = $objectManager ? $objectManager : $this->getMock('Doctrine\ODM\MongoDB\DocumentManager', [], [], '', false);
         $hydrator = new DoctrineObject($objectManager);
+
         return $hydrator;
     }
 
@@ -114,14 +115,14 @@ class DoctrineObjectTest extends BaseTest
             'referenceMany' => [$this->createReferenceMany('name')],
             'embedOne' => [
                 'id' => 1,
-                'name' => 'name'
+                'name' => 'name',
             ],
             'embedMany' => [
                 [
                     'id' => 1,
-                    'name' => 'name'
-                ]
-            ]
+                    'name' => 'name',
+                ],
+            ],
         ];
 
         $hydrator = new DoctrineObject($this->dm);
@@ -172,5 +173,4 @@ class DoctrineObjectTest extends BaseTest
 
         return $embedded->getId();
     }
-
 }

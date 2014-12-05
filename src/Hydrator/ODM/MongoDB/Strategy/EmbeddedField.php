@@ -6,7 +6,6 @@
 
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
-
 /**
  * Class PersistentCollection
  *
@@ -14,7 +13,6 @@ namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
  */
 class EmbeddedField extends AbstractMongoStrategy
 {
-
     /**
      * @param mixed $value
      *
@@ -23,6 +21,7 @@ class EmbeddedField extends AbstractMongoStrategy
     public function extract($value)
     {
         $hydrator = $this->getDoctrineHydrator($value);
+
         return $hydrator->extract($value);
     }
 
@@ -48,5 +47,4 @@ class EmbeddedField extends AbstractMongoStrategy
 
         return $object;
     }
-
 }

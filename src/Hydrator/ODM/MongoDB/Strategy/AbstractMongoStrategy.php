@@ -1,6 +1,7 @@
 <?php
 
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
+
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
 use DoctrineModule\Persistence\ProvidesObjectManager;
@@ -17,7 +18,6 @@ abstract class AbstractMongoStrategy
     extends AbstractCollectionStrategy
     implements ObjectManagerAwareInterface
 {
-
     use ProvidesObjectManager;
 
     /**
@@ -43,9 +43,9 @@ abstract class AbstractMongoStrategy
         }
 
         $hydrator = new DoctrineObject($this->getObjectManager(), $document);
+
         return $hydrator;
     }
-
 
     /**
      * Use default collection strategy
@@ -74,6 +74,7 @@ abstract class AbstractMongoStrategy
     {
         $repo = $this->getObjectManager()->getRepository($targetDocument);
         $document = $repo->find($targetId);
+
         return $document;
     }
 }

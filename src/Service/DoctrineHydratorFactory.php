@@ -229,7 +229,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         if (!($hydrator instanceof NamingStrategyEnabledInterface) || !isset($config['naming_strategy'])) {
             return;
         }
-        
+
         $namingStrategyKey = $config['naming_strategy'];
         if (!$serviceManager->has($namingStrategyKey)) {
             throw new ServiceNotCreatedException(sprintf('Invalid naming strategy %s for field %s', $namingStrategyKey, $field));

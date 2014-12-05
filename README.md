@@ -39,6 +39,12 @@ return array(
             'strategies' => [
                 'fieldname' => 'custom.strategy.key.in.servicemanager',
             ],
+            'filters' => [
+                'custom_filter_name' => [
+                    'condition' => 'and', // optional, default is 'or'
+                    'filter'    => 'Filter\\Key\\In\\ServiceManager',
+                ],
+            ],
         ),
     ),
 );

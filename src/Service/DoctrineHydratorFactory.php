@@ -267,41 +267,40 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      * @param  ServiceLocatorInterface $serviceManager
      * @param                          $config
      * @param                          $objectManager
-     * @return AbstractHydrator
      */
     protected function configureHydratorFilters($hydrator, $serviceManager, $config, $objectManager)
     {
-        if (isset($config['filters']) && is_array($config['filters'])) {
-            foreach ($config['filters'] as $name => $filterConfig) {
-                $conditionMap = [
-                    'and' => FilterComposite::CONDITION_AND,
-                    'or'  => FilterComposite::CONDITION_OR,
-                ];
-                $condition = isset($filterConfig['condition']) ?
-                                $conditionMap[$filterConfig['condition']] :
-                                FilterComposite::CONDITION_OR;
-
-                $filterService = $filterConfig['filter'];
-                if (!$serviceManager->has($filterService)) {
-                    throw new ServiceNotCreatedException(
-                        sprintf('Invalid filter %s for field %s: service does not exist', $filterService, $name)
-                    );
-                }
-
-                $filterService = $serviceManager->get($filterService);
-                if (!$filterService instanceof FilterInterface) {
-                    throw new InvalidCallbackException(
-                        sprintf('Filter service %s must implement FilterInterface'), get_class($filterService)
-                    );
-                }
-
-                if ($filterService instanceof ObjectManagerAwareInterface) {
-                    $filterService->setObjectManager($objectManager);
-                }
-                $hydrator->addFilter($name, $filterService, $condition);
-            }
+        if (!isset($config['filters']) || !is_array($config['filters'])) {
+            return;
         }
 
-        return $hydrator;
+        foreach ($config['filters'] as $name => $filterConfig) {
+            $conditionMap = [
+                'and' => FilterComposite::CONDITION_AND,
+                'or'  => FilterComposite::CONDITION_OR,
+            ];
+            $condition = isset($filterConfig['condition']) ?
+                            $conditionMap[$filterConfig['condition']] :
+                            FilterComposite::CONDITION_OR;
+
+            $filterService = $filterConfig['filter'];
+            if (!$serviceManager->has($filterService)) {
+                throw new ServiceNotCreatedException(
+                    sprintf('Invalid filter %s for field %s: service does not exist', $filterService, $name)
+                );
+            }
+
+            $filterService = $serviceManager->get($filterService);
+            if (!$filterService instanceof FilterInterface) {
+                throw new InvalidCallbackException(
+                    sprintf('Filter service %s must implement FilterInterface'), get_class($filterService)
+                );
+            }
+
+            if ($filterService instanceof ObjectManagerAwareInterface) {
+                $filterService->setObjectManager($objectManager);
+            }
+            $hydrator->addFilter($name, $filterService, $condition);
+        }
     }
 }

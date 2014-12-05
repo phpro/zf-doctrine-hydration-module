@@ -187,9 +187,6 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         $hydratorFactory = $objectManager->getHydratorFactory();
         $hydrator = $hydratorFactory->getHydratorFor($config['entity_class']);
 
-        // Configure hydrator:
-        $this->configureHydratorStrategies($hydrator, $serviceManager, $config, $objectManager);
-
         return $hydrator;
     }
 
@@ -233,7 +230,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
 
         $namingStrategyKey = $config['naming_strategy'];
         if (!$serviceManager->has($namingStrategyKey)) {
-            throw new ServiceNotCreatedException(sprintf('Invalid naming strategy %s for field %s', $namingStrategyKey, $field));
+            throw new ServiceNotCreatedException(sprintf('Invalid naming strategy %s.', $namingStrategyKey));
         }
 
         $namingStrategy = $serviceManager->get($namingStrategyKey);
@@ -259,7 +256,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      */
     protected function configureHydratorStrategies($hydrator, ServiceLocatorInterface $serviceManager, $config, $objectManager)
     {
-        if (!($hydrator instanceof StrategyEnabledInterface) || !isset($config['strategies'])) {
+        if (!($hydrator instanceof StrategyEnabledInterface) || !isset($config['strategies']) || !is_array($config['strategies'])) {
             return;
         }
 

@@ -191,7 +191,7 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
-    public function it_should_be_possible_to_configure_a_naming_stategies()
+    public function it_should_be_possible_to_configure_a_naming_stategy()
     {
         $hydrator = $this->createOrmHydrator();
         $realHydrator = $hydrator->getExtractService();

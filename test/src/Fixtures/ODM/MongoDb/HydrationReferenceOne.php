@@ -44,5 +44,4 @@ class HydrationReferenceOne
     {
         return $this->name;
     }
-
 }

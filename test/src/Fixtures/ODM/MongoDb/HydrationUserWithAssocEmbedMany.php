@@ -233,5 +233,4 @@ class HydrationUserWithAssocEmbedMany
     {
         return $this->createdAt;
     }
-
 }

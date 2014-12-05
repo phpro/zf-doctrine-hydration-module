@@ -13,7 +13,6 @@ use Zend\Stdlib\Hydrator\HydratorPluginManager;
  */
 class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @var array
      */
@@ -34,7 +33,7 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->serviceConfig = require(TEST_BASE_PATH . '/config/module.config.php');
+        $this->serviceConfig = require TEST_BASE_PATH.'/config/module.config.php';
 
         $this->serviceManager = new ServiceManager();
         $this->serviceManager->setAllowOverride(true);
@@ -57,6 +56,7 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $objectManager = $this->getMock($objectManagerClass, [], [], '', false);
         $this->serviceManager->setService('doctrine.default.object-manager', $objectManager);
+
         return $objectManager;
     }
 

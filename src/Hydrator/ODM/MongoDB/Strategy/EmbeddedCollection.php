@@ -7,7 +7,6 @@
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
-use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
 
 /**
@@ -17,7 +16,6 @@ use DoctrineModule\Stdlib\Hydrator;
  */
 class EmbeddedCollection extends AbstractMongoStrategy
 {
-
     /**
      * @param mixed $value
      *
@@ -102,5 +100,4 @@ class EmbeddedCollection extends AbstractMongoStrategy
 
         return $object;
     }
-
 }

@@ -12,7 +12,6 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
  */
 class DateTimeFieldTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @param bool $isTimestamp
      *
@@ -83,5 +82,4 @@ class DateTimeFieldTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($date->getTimestamp(), $strategy->hydrate($dateInt));
         $this->assertEquals($date->getTimestamp(), $strategy->hydrate($dateString));
     }
-
 }

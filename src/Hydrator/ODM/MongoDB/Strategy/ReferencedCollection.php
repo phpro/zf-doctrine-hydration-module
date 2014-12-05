@@ -7,7 +7,6 @@
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
-use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
 
 /**
@@ -19,7 +18,6 @@ use DoctrineModule\Stdlib\Hydrator;
  */
 class ReferencedCollection extends AbstractMongoStrategy
 {
-
     /**
      * @param mixed $value
      *
@@ -41,7 +39,6 @@ class ReferencedCollection extends AbstractMongoStrategy
 
         return $result;
     }
-
 
     /**
      * @param mixed $value
@@ -79,5 +76,4 @@ class ReferencedCollection extends AbstractMongoStrategy
 
         return $this->findTargetDocument($targetDocument, $document);
     }
-
 }

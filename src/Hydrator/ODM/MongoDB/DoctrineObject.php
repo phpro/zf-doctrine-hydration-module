@@ -15,7 +15,6 @@ use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\DateTimeField;
  */
 class DoctrineObject extends BaseHydrator
 {
-
     /**
      * TODO: For the moment only byValue configured...
      *
@@ -56,7 +55,6 @@ class DoctrineObject extends BaseHydrator
     {
         $associations = $this->metadata->getAssociationNames();
         foreach ($associations as $association) {
-
             // Add meta data to existing collections:
             if ($this->hasStrategy($association)) {
                 $strategy = $this->getStrategy($association);
@@ -101,7 +99,6 @@ class DoctrineObject extends BaseHydrator
      */
     protected function injectAssociationStrategyDependencies($strategy, $association)
     {
-
         if ($strategy instanceof DoctrineStrategy\AbstractCollectionStrategy) {
             $strategy->setCollectionName($association);
             $strategy->setClassMetadata($this->metadata);
@@ -128,12 +125,11 @@ class DoctrineObject extends BaseHydrator
             if ($strategy instanceof AbstractMongoStrategy) {
                 $strategy->setObject($object);
                 $this->hydrateValue($collectionName, $values, $values);
+
                 return;
             }
-
         }
 
         parent::toMany($object, $collectionName, $target, $values);
     }
-
 }

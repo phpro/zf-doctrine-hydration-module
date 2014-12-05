@@ -8,7 +8,6 @@ use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUserWithAssocEmbedMany;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
-
 /**
  * Class EmbeddedCollectionTest
  *
@@ -55,8 +54,8 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         $data = [
             [
                 'id' => 1,
-                'name' => 'name'
-            ]
+                'name' => 'name',
+            ],
         ];
 
         $strategy = $this->getStrategy($this->dm, $user, 'embedMany');
@@ -76,8 +75,8 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         $data = [
             'user1' => [
                 'id' => 1,
-                'name' => 'name'
-            ]
+                'name' => 'name',
+            ],
         ];
 
         $strategy = $this->getStrategy($this->dm, $user, 'embedMany');
@@ -85,5 +84,4 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         $this->assertTrue($user->getEmbedMany()->containsKey('user1'));
         $this->assertEquals('name', $user->getEmbedMany()->get('user1')->getName());
     }
-
 }

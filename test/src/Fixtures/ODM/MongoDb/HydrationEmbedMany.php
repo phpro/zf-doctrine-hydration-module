@@ -44,5 +44,4 @@ class HydrationEmbedMany
     {
         return $this->name;
     }
-
 }

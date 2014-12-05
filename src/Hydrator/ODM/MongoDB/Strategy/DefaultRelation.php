@@ -7,7 +7,6 @@
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
-use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator;
 
 /**
@@ -17,7 +16,6 @@ use DoctrineModule\Stdlib\Hydrator;
  */
 class DefaultRelation extends AbstractMongoStrategy
 {
-
     /**
      * @param mixed $value
      *
@@ -44,5 +42,4 @@ class DefaultRelation extends AbstractMongoStrategy
 
         return $value;
     }
-
 }

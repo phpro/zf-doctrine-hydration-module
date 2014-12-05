@@ -26,9 +26,7 @@ use Zend\Stdlib\Hydrator\StrategyEnabledInterface;
  */
 class DoctrineHydratorFactory implements AbstractFactoryInterface
 {
-
     const FACTORY_NAMESPACE = 'doctrine-hydrator';
-
 
     const OBJECT_MANAGER_TYPE_ODM_MONGODB = 'ODM/MongoDB';
     const OBJECT_MANAGER_TYPE_ORM = 'ORM';
@@ -66,6 +64,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         $namespace = self::FACTORY_NAMESPACE;
         if (!isset($config[$namespace]) || !is_array($config[$namespace]) || !isset($config[$namespace][$requestedName])) {
             $this->lookupCache[$requestedName] = false;
+
             return false;
         }
 
@@ -89,6 +88,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         $this->lookupCache[$requestedName] = true;
+
         return true;
     }
 
@@ -122,6 +122,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         $hydrator = new DoctrineHydrator($extractService, $hydrateService);
+
         return $hydrator;
     }
 
@@ -141,7 +142,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
             return self::OBJECT_MANAGER_TYPE_ORM;
         }
 
-        throw new ServiceNotCreatedException('Unknown object manager type: ' . get_class($objectManager));
+        throw new ServiceNotCreatedException('Unknown object manager type: '.get_class($objectManager));
     }
 
     /**
@@ -158,6 +159,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         $objectManager = $serviceManager->get($config['object_manager']);
+
         return $objectManager;
     }
 
@@ -172,7 +174,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     {
         $objectManagerType = $this->getObjectManagerType($objectManager);
         if ($objectManagerType != self::OBJECT_MANAGER_TYPE_ODM_MONGODB) {
-            return null;
+            return;
         }
 
         $hydratorFactory = $objectManager->getHydratorFactory();
@@ -187,7 +189,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     /**
      * @param ServiceLocatorInterface $serviceManager
      * @param                         $config
-     * @param ObjectManager $objectManager
+     * @param ObjectManager           $objectManager
      *
      * @return HydratorInterface
      */
@@ -202,6 +204,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         $this->configureHydratorStrategies($hydrator, $serviceManager, $config, $objectManager);
+
         return $hydrator;
     }
 

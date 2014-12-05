@@ -263,10 +263,10 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      *         ],
      *     ],
      *
-     * @param  AbstractHydrator        $hydrator
-     * @param  ServiceLocatorInterface $serviceManager
-     * @param                          $config
-     * @param                          $objectManager
+     * @param AbstractHydrator        $hydrator
+     * @param ServiceLocatorInterface $serviceManager
+     * @param                         $config
+     * @param                         $objectManager
      */
     protected function configureHydratorFilters($hydrator, $serviceManager, $config, $objectManager)
     {

@@ -19,6 +19,7 @@ use Zend\Stdlib\Exception\InvalidCallbackException;
 use Zend\Stdlib\Hydrator\AbstractHydrator;
 use Zend\Stdlib\Hydrator\Filter\FilterComposite;
 use Zend\Stdlib\Hydrator\Filter\FilterInterface;
+use Zend\Stdlib\Hydrator\FilterEnabledInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 use Zend\Stdlib\Hydrator\StrategyEnabledInterface;
@@ -284,20 +285,6 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     /**
      * Add filters to the Hydrator based on a predefined configuration format, if specified.
      *
-     * To configure filters:
-     *
-     *     'doctrine-hydrator' => [
-     *         'Acme\\V1\\Rest\\User\\UserHydrator' => [
-     *             //.. other hydrator config e.g. 'strategies'
-     *             'filters' => [
-     *                 'custom_filter_name' => [
-     *                     'condition' => 'and', // optional, default is 'or'
-     *                     'filter'    => 'Filter\\Key\\In\\ServiceManager',
-     *                 ],
-     *             ],
-     *         ],
-     *     ],
-     *
      * @param AbstractHydrator        $hydrator
      * @param ServiceLocatorInterface $serviceManager
      * @param                         $config
@@ -305,7 +292,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      */
     protected function configureHydratorFilters($hydrator, $serviceManager, $config, $objectManager)
     {
-        if (!isset($config['filters']) || !is_array($config['filters'])) {
+        if (!($hydrator instanceof FilterEnabledInterface) || !isset($config['filters']) || !is_array($config['filters'])) {
             return;
         }
 

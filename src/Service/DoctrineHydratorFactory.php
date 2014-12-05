@@ -22,6 +22,8 @@ use Zend\Stdlib\Hydrator\Filter\FilterInterface;
 use Zend\Stdlib\Hydrator\HydratorInterface;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 use Zend\Stdlib\Hydrator\StrategyEnabledInterface;
+use Zend\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface;
+use Zend\Stdlib\Hydrator\NamingStrategyEnabledInterface;
 
 /**
  * Class DoctrineHydratorFactory
@@ -207,10 +209,43 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
             $hydrator = new Hydrator\DoctrineObject($objectManager, $config['by_value']);
         }
 
+        $this->configureHydratorNamingStrategy($hydrator, $serviceManager, $config, $objectManager);
         $this->configureHydratorStrategies($hydrator, $serviceManager, $config, $objectManager);
         $this->configureHydratorFilters($hydrator, $serviceManager, $config, $objectManager);
 
         return $hydrator;
+    }
+
+    /**
+     * @param                         $hydrator
+     * @param ServiceLocatorInterface $serviceManager
+     * @param                         $config
+     * @param                         $objectManager
+     *
+     * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
+     */
+    public function configureHydratorNamingStrategy($hydrator, ServiceLocatorInterface $serviceManager, $config, $objectManager)
+    {
+        if (!($hydrator instanceof NamingStrategyEnabledInterface) || !isset($config['naming_strategy'])) {
+            return;
+        }
+
+        $namingStrategyKey = $config['naming_strategy'];
+        if (!$serviceManager->has($namingStrategyKey)) {
+            throw new ServiceNotCreatedException(sprintf('Invalid naming strategy %s for field %s', $namingStrategyKey, $field));
+        }
+
+        $namingStrategy = $serviceManager->get($namingStrategyKey);
+        if (!$namingStrategy instanceof NamingStrategyInterface) {
+            throw new ServiceNotCreatedException(sprintf('Invalid naming strategy class %s', get_class($namingStrategy)));
+        }
+
+        // Attach object manager:
+        if ($namingStrategy instanceof ObjectManagerAwareInterface) {
+            $namingStrategy->setObjectManager($objectManager);
+        }
+
+        $hydrator->setNamingStrategy($namingStrategy);
     }
 
     /**

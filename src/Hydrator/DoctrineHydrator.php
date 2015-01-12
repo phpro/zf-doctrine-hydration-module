@@ -64,14 +64,14 @@ class DoctrineHydrator
         return $this->extractService->extract($object);
     }
 
-    /**
-     * Hydrate $object with the provided $data.
-     *
-     * @param array  $data
-     * @param object $object
-     *
-     * @return object
-     */
+     /**
+      * Hydrate $object with the provided $data.
+      *
+      * @param array  $data
+      * @param object $object
+      *
+      * @return object
+      */
      public function hydrate(array $data, $object)
      {
          // Zend hydrator:

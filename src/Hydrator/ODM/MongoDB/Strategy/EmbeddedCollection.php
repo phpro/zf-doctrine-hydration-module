@@ -93,7 +93,7 @@ class EmbeddedCollection extends AbstractMongoStrategy
         }
 
         $rc = new \ReflectionClass($targetDocument);
-        $object = $rc->newInstanceWithoutConstructor();
+        $object = $rc->newInstance();
 
         $hydrator = $this->getDoctrineHydrator($targetDocument);
         $hydrator->hydrate($document, $object);

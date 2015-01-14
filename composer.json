@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-      "php": ">=5.4.0",
+      "php": ">=5.3.23",
       "doctrine/common": ">=2.1",
       "zendframework/zend-modulemanager": "2.*",
       "zendframework/zend-servicemanager": "2.*",

@@ -30,7 +30,7 @@ class EmbeddedCollection extends AbstractMongoStrategy
         }
 
         $mapping = $this->getClassMetadata()->fieldMappings[$this->getCollectionName()];
-        $result = [];
+        $result = array();
         if ($value) {
             foreach ($value as $index => $object) {
                 $hydrator = $this->getDoctrineHydrator($object);

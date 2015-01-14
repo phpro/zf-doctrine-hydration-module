@@ -29,7 +29,7 @@ class ReferencedCollection extends AbstractMongoStrategy
         $strategy->setClassMetadata($this->getClassMetadata());
         $strategy->setCollectionName($this->getCollectionName());
 
-        $result = [];
+        $result = array();
         if ($value) {
             foreach ($value as $key => $record) {
                 $strategy->setObject($record);

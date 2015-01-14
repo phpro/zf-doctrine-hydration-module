@@ -41,7 +41,7 @@ class DoctrineObject extends BaseHydrator
             }
 
             $fieldMeta = $this->metadata->fieldMappings[$field];
-            if (in_array($fieldMeta['type'], ['date', 'timestamp'])) {
+            if (in_array($fieldMeta['type'], array('date', 'timestamp'))) {
                 $isTimestamp = ($fieldMeta['type'] == 'timestamp');
                 $this->addStrategy($field, new DateTimeField($isTimestamp));
             }

@@ -50,10 +50,10 @@ class EmbeddedFieldTest extends AbstractMongoStrategyTest
         $user->setId(1);
         $user->setName('username');
 
-        $data = [
+        $data = array(
             'id' => 1,
             'name' => 'name',
-        ];
+        );
 
         $strategy = $this->getStrategy($this->dm, $user, 'embedOne');
         $result = $strategy->hydrate($data);

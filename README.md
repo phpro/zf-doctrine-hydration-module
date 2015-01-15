@@ -37,6 +37,7 @@ return array(
             'by_value' => true,
             'use_generated_hydrator' => true,
             'naming_strategy' => 'custom.naming.strategy.key.in.servicemanager',
+            'hydrator' => 'custom.hydrator.key.in.hydratormanager',
             'strategies' => [
                 'fieldname' => 'custom.strategy.key.in.servicemanager',
             ],
@@ -56,6 +57,20 @@ Strategies will not work when this option is set to `true`.
 
 
 From here on, you can get the hydrator by calling `get('hydrator-manager-key')` on the HydratorManager.
+
+#Override hydrator:
+
+If the standard DoctrineHydrator is not flexible enough, you can set a custom `hydrator`. This allows you to use an extended DoctrineHydrator or another existing hydrator, and configure it with this module. This setting will override `use_generated_hydrator`.
+
+```php
+return array(
+    'doctrine-hydrator' => array(
+        'custom-hydrator' => array(
+            // other config
+            'hydrator' => 'Zend\Stdlib\Hydrator\ArraySerializable'
+        ),
+    ),
+);
 
 #Custom strategies:
 ## MongoDB ODM
@@ -87,6 +102,7 @@ return array(
         ),
     ),
 );
+
 ```
 In this example configuration, the hydrator factory will retrieve `custom.filter` from the Service Manager and inject it as a filter into the hydrator. The filter must implement `Zend\Stdlib\Hydrator\Filter\FilterInterface`. 
 

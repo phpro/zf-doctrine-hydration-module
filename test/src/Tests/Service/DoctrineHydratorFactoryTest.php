@@ -176,7 +176,6 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($generatedHydrator, $hydrator->getHydrateService());
     }
 
-
     /**
      * @test
      */
@@ -190,7 +189,7 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
             ->method('get')
             ->with('custom.hydrator')
             ->will($this->returnValue($this->getMock('Zend\Stdlib\Hydrator\ArraySerializable')));
-        
+
         $hydrator = $this->createOrmHydrator();
 
         $this->assertInstanceOf('Zend\Stdlib\Hydrator\ArraySerializable', $hydrator->getHydrateService());

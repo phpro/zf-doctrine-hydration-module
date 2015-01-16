@@ -6,6 +6,8 @@
 
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
+use Doctrine\Instantiator\Instantiator;
+
 /**
  * Class PersistentCollection
  *
@@ -39,8 +41,8 @@ class EmbeddedField extends AbstractMongoStrategy
             return $value;
         }
 
-        $rc = new \ReflectionClass($targetDocument);
-        $object = $rc->newInstance();
+        $instantiator = new Instantiator();
+        $object = $instantiator->instantiate($targetDocument);
 
         $hydrator = $this->getDoctrineHydrator($targetDocument);
         $hydrator->hydrate($value, $object);

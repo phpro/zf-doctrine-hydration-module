@@ -34,7 +34,7 @@ class ReferencedCollectionTest extends AbstractMongoStrategyTest
         $referenced = new HydrationReferenceMany();
         $referenced->setId(1);
         $referenced->setName('name');
-        $user->addReferenceMany([$referenced]);
+        $user->addReferenceMany(array($referenced));
 
         $strategy = $this->getStrategy($this->dm, $user, 'referenceMany');
         $result = $strategy->extract($user->getReferenceMany());
@@ -51,11 +51,12 @@ class ReferencedCollectionTest extends AbstractMongoStrategyTest
         $user->setName('username');
 
         $id = $this->createReference('name');
-        $data = [$id];
+        $data = array($id);
 
         $strategy = $this->getStrategy($this->dm, $user, 'referenceMany');
         $strategy->hydrate($data);
-        $this->assertEquals('name', $user->getReferenceMany()[0]->getName());
+        $referenceMany = $user->getReferenceMany();
+        $this->assertEquals('name', $referenceMany[0]->getName());
     }
 
     /**

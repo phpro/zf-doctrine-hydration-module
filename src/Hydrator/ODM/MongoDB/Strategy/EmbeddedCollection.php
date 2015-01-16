@@ -8,6 +8,7 @@ namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
 use DoctrineModule\Stdlib\Hydrator;
+use Doctrine\Instantiator\Instantiator;
 
 /**
  * Class PersistentCollection
@@ -30,7 +31,7 @@ class EmbeddedCollection extends AbstractMongoStrategy
         }
 
         $mapping = $this->getClassMetadata()->fieldMappings[$this->getCollectionName()];
-        $result = [];
+        $result = array();
         if ($value) {
             foreach ($value as $index => $object) {
                 $hydrator = $this->getDoctrineHydrator($object);
@@ -92,8 +93,8 @@ class EmbeddedCollection extends AbstractMongoStrategy
             return $document;
         }
 
-        $rc = new \ReflectionClass($targetDocument);
-        $object = $rc->newInstanceWithoutConstructor();
+        $instantiator = new Instantiator();
+        $object = $instantiator->instantiate($targetDocument);
 
         $hydrator = $this->getDoctrineHydrator($targetDocument);
         $hydrator->hydrate($document, $object);

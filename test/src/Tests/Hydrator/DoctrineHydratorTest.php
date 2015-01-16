@@ -58,7 +58,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
     public function it_should_extract_an_object()
     {
         $object = new \stdClass();
-        $extracted = ['extracted' => true];
+        $extracted = array('extracted' => true);
         $extractService = $this->getMock('Zend\Stdlib\Hydrator\HydratorInterface');
         $extractService
             ->expects($this->any())
@@ -77,7 +77,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
     public function it_should_hydrate_an_object()
     {
         $object = new \stdClass();
-        $data = ['field' => 'value'];
+        $data = array('field' => 'value');
 
         $hydrateService = $this->getMock('Zend\Stdlib\Hydrator\HydratorInterface');
         $hydrateService
@@ -98,7 +98,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
     public function it_should_use_a_generated_doctrine_hydrator_while_hydrating_an_object()
     {
         $object = new \stdClass();
-        $data = ['field' => 'value'];
+        $data = array('field' => 'value');
 
         $hydrateService = $this->getMock('Doctrine\ODM\MongoDB\Hydrator\HydratorInterface');
         $hydrateService

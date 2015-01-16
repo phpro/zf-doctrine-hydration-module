@@ -35,7 +35,7 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         $embedded = new HydrationEmbedMany();
         $embedded->setId(1);
         $embedded->setName('name');
-        $user->addEmbedMany([$embedded]);
+        $user->addEmbedMany(array($embedded));
 
         $strategy = $this->getStrategy($this->dm, $user, 'embedMany');
         $result = $strategy->extract($user->getEmbedMany());
@@ -51,16 +51,17 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         $user->setId(1);
         $user->setName('username');
 
-        $data = [
-            [
+        $data = array(
+            array(
                 'id' => 1,
                 'name' => 'name',
-            ],
-        ];
+            ),
+        );
 
         $strategy = $this->getStrategy($this->dm, $user, 'embedMany');
         $strategy->hydrate($data);
-        $this->assertEquals('name', $user->getEmbedMany()[0]->getName());
+        $embedMany = $user->getEmbedMany();
+        $this->assertEquals('name', $embedMany[0]->getName());
     }
 
     /**
@@ -72,12 +73,12 @@ class EmbeddedCollectionTest extends AbstractMongoStrategyTest
         $user->setId(1);
         $user->setName('username');
 
-        $data = [
-            'user1' => [
+        $data = array(
+            'user1' => array(
                 'id' => 1,
                 'name' => 'name',
-            ],
-        ];
+            ),
+        );
 
         $strategy = $this->getStrategy($this->dm, $user, 'embedMany');
         $strategy->hydrate($data);

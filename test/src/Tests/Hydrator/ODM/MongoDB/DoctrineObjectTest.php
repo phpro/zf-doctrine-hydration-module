@@ -24,7 +24,7 @@ class DoctrineObjectTest extends BaseTest
      */
     protected function createHydrator($objectManager = null)
     {
-        $objectManager = $objectManager ? $objectManager : $this->getMock('Doctrine\ODM\MongoDB\DocumentManager', [], [], '', false);
+        $objectManager = $objectManager ? $objectManager : $this->getMock('Doctrine\ODM\MongoDB\DocumentManager', array(), array(), '', false);
         $hydrator = new DoctrineObject($objectManager);
 
         return $hydrator;
@@ -70,7 +70,7 @@ class DoctrineObjectTest extends BaseTest
         $embedMany = new HydrationEmbedMany();
         $embedMany->setId(1);
         $embedMany->setName('name');
-        $user->addEmbedMany([$embedMany]);
+        $user->addEmbedMany(array($embedMany));
 
         $referenceOne = new HydrationReferenceOne();
         $referenceOne->setId(1);
@@ -80,7 +80,7 @@ class DoctrineObjectTest extends BaseTest
         $referenceMany = new HydrationEmbedMany();
         $referenceMany->setId(1);
         $referenceMany->setName('name');
-        $user->addReferenceMany([$referenceMany]);
+        $user->addReferenceMany(array($referenceMany));
 
         $hydrator = new DoctrineObject($this->dm);
         $result = $hydrator->extract($user);
@@ -106,24 +106,24 @@ class DoctrineObjectTest extends BaseTest
         $birthday = new \DateTime('1 january 2014');
 
         $user = new HydrationUser();
-        $data = [
+        $data = array(
             'id' => 1,
             'name' => 'user',
             'creationDate' => $creationDate->getTimestamp(),
             'birthday' => $birthday->getTimestamp(),
             'referenceOne' => $this->createReferenceOne('name'),
-            'referenceMany' => [$this->createReferenceMany('name')],
-            'embedOne' => [
+            'referenceMany' => array($this->createReferenceMany('name')),
+            'embedOne' => array(
                 'id' => 1,
                 'name' => 'name',
-            ],
-            'embedMany' => [
-                [
+            ),
+            'embedMany' => array(
+                array(
                     'id' => 1,
                     'name' => 'name',
-                ],
-            ],
-        ];
+                ),
+            ),
+        );
 
         $hydrator = new DoctrineObject($this->dm);
         $hydrator->hydrate($data, $user);
@@ -133,13 +133,15 @@ class DoctrineObjectTest extends BaseTest
         $this->assertEquals($creationDate->getTimestamp(), $user->getCreatedAt());
         $this->assertEquals($birthday->getTimestamp(), $user->getBirthday()->getTimestamp());
         $this->assertInstanceOf('PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceOne', $user->getReferenceOne());
-        $this->assertInstanceOf('PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceMany', $user->getReferenceMany()[0]);
+        $referenceMany = $user->getReferenceMany();
+        $this->assertInstanceOf('PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceMany', $referenceMany[0]);
         $this->assertInstanceOf('PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedOne', $user->getEmbedOne());
-        $this->assertInstanceOf('PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedMany', $user->getEmbedMany()[0]);
+        $embedMany = $user->getEmbedMany();
+        $this->assertInstanceOf('PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedMany', $embedMany[0]);
         $this->assertEquals('name', $user->getReferenceOne()->getName());
-        $this->assertEquals('name', $user->getReferenceMany()[0]->getName());
+        $this->assertEquals('name', $referenceMany[0]->getName());
         $this->assertEquals('name', $user->getEmbedOne()->getName());
-        $this->assertEquals('name', $user->getEmbedMany()[0]->getName());
+        $this->assertEquals('name', $embedMany[0]->getName());
     }
 
     /**

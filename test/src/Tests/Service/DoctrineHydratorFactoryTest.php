@@ -56,7 +56,7 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
      */
     protected function stubObjectManager($objectManagerClass)
     {
-        $objectManager = $this->getMock($objectManagerClass, [], [], '', false);
+        $objectManager = $this->getMock($objectManagerClass, array(), array(), '', false);
         $this->serviceManager->setService('doctrine.default.object-manager', $objectManager);
 
         return $objectManager;
@@ -154,7 +154,7 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
         $this->serviceManager->setService('Config', $this->serviceConfig);
         $objectManager = $this->stubObjectManager('Doctrine\ODM\MongoDb\DocumentManager');
 
-        $hydratorFactory = $this->getMock('Doctrine\ODM\MongoDB\Hydrator\HydratorFactory', [], [], '', false);
+        $hydratorFactory = $this->getMock('Doctrine\ODM\MongoDB\Hydrator\HydratorFactory', array(), array(), '', false);
         $generatedHydrator = $this->getMock('Doctrine\ODM\MongoDB\Hydrator\HydratorInterface');
 
         $objectManager

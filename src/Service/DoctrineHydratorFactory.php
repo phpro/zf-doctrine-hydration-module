@@ -294,10 +294,10 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         foreach ($config['filters'] as $name => $filterConfig) {
-            $conditionMap = [
+            $conditionMap = array(
                 'and' => FilterComposite::CONDITION_AND,
                 'or'  => FilterComposite::CONDITION_OR,
-            ];
+            );
             $condition = isset($filterConfig['condition']) ?
                             $conditionMap[$filterConfig['condition']] :
                             FilterComposite::CONDITION_OR;

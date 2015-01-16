@@ -7,15 +7,15 @@ return array(
             'by_value' => true,
             'use_generated_hydrator' => false,
             'naming_strategy' => 'custom.naming_strategy',
-            'strategies' => [
+            'strategies' => array(
                 'fieldname' => 'custom.strategy',
-            ],
-            'filters' => [
-                'custom.filter.name' => [
+            ),
+            'filters' => array(
+                'custom.filter.name' => array(
                     'condition' => 'and', //FilterComposite::CONDITION_AND,
                     'filter' => 'custom.filter',
-                ],
-            ],
+                ),
+            ),
         ),
     ),
 );

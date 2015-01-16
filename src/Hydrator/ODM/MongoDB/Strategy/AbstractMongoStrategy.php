@@ -4,7 +4,6 @@ namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Persistence\ObjectManagerAwareInterface;
-use DoctrineModule\Persistence\ProvidesObjectManager;
 use DoctrineModule\Stdlib\Hydrator\Strategy\AbstractCollectionStrategy;
 use DoctrineModule\Stdlib\Hydrator\Strategy\AllowRemoveByValue;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\DoctrineObject;
@@ -18,7 +17,30 @@ abstract class AbstractMongoStrategy
     extends AbstractCollectionStrategy
     implements ObjectManagerAwareInterface
 {
-    use ProvidesObjectManager;
+    /**
+     * @var ObjectManager
+     */
+    protected $objectManager;
+
+    /**
+     * Set the object manager
+     *
+     * @param ObjectManager $objectManager
+     */
+    public function setObjectManager(ObjectManager $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
+
+    /**
+     * Get the object manager
+     *
+     * @return ObjectManager
+     */
+    public function getObjectManager()
+    {
+        return $this->objectManager;
+    }
 
     /**
      *

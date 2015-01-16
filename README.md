@@ -38,15 +38,15 @@ return array(
             'use_generated_hydrator' => true,
             'naming_strategy' => 'custom.naming.strategy.key.in.servicemanager',
             'hydrator' => 'custom.hydrator.key.in.hydratormanager',
-            'strategies' => [
+            'strategies' => array(
                 'fieldname' => 'custom.strategy.key.in.servicemanager',
-            ],
-            'filters' => [
-                'custom_filter_name' => [
+            ),
+            'filters' => array(
+                'custom_filter_name' => array(
                     'condition' => 'and', // optional, default is 'or'
                     'filter'    => 'custom.hydrator.filter.key.in.servicemanager',
-                ],
-            ],
+                ),
+            ),
         ),
     ),
 );
@@ -81,12 +81,12 @@ return array(
     'doctrine-hydrator' => array(
         'custom-hydrator' => array(
             // other config
-            'filters' => [
-                'custom.filter.name' => [
+            'filters' => array(
+                'custom.filter.name' => array(
                     'condition' => 'and', //optional, default: FilterComposite::CONDITION_OR,
                     'filter' => 'custom.filter', // a name in the Service Manager
-                ],
-            ],
+                ),
+            ),
         ),
     ),
 );

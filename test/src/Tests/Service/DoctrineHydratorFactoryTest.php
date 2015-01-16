@@ -179,6 +179,26 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function it_should_be_possible_to_configure_a_custom_hydrator()
+    {
+        $this->serviceConfig['doctrine-hydrator']['custom-hydrator']['hydrator'] = 'custom.hydrator';
+        $this->serviceManager->setService('Config', $this->serviceConfig);
+
+        $this->hydratorManager
+            ->expects($this->once())
+            ->method('get')
+            ->with('custom.hydrator')
+            ->will($this->returnValue($this->getMock('Zend\Stdlib\Hydrator\ArraySerializable')));
+
+        $hydrator = $this->createOrmHydrator();
+
+        $this->assertInstanceOf('Zend\Stdlib\Hydrator\ArraySerializable', $hydrator->getHydrateService());
+        $this->assertInstanceOf('Zend\Stdlib\Hydrator\ArraySerializable', $hydrator->getExtractService());
+    }
+
+    /**
+     * @test
+     */
     public function it_should_be_possible_to_configure_hydration_stategies()
     {
         $hydrator = $this->createOrmHydrator();

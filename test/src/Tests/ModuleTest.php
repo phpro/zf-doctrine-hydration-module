@@ -5,9 +5,7 @@ namespace PhproTest\DoctrineHydrationModule\Tests;
 use Phpro\DoctrineHydrationModule\Module;
 
 /**
- * Class ModuleTest
- *
- * @package tests\Phpro\DoctrineHydrationModule
+ * Class ModuleTest.
  */
 class ModuleTest extends \PHPUnit_Framework_TestCase
 {

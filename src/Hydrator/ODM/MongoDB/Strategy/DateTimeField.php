@@ -6,9 +6,7 @@ use Zend\Form\Element\DateTime;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
- * Class DateTimeField
- *
- * @package Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy
+ * Class DateTimeField.
  */
 class DateTimeField implements StrategyInterface
 {
@@ -59,7 +57,7 @@ class DateTimeField implements StrategyInterface
     }
 
     /**
-     * Convert any value to date time
+     * Convert any value to date time.
      *
      * @param $value
      *

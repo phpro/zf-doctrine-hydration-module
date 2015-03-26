@@ -9,9 +9,7 @@ use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUserWithAsso
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
- * Class EmbeddedCollectionTest
- *
- * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * Class EmbeddedCollectionTest.
  */
 class EmbeddedCollectionTest extends AbstractMongoStrategyTest
 {

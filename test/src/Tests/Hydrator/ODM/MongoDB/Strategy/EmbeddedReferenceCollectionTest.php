@@ -8,9 +8,7 @@ use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
- * Class EmbeddedReferenceCollectionTest
- *
- * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * Class EmbeddedReferenceCollectionTest.
  */
 class EmbeddedReferenceCollectionTest extends AbstractMongoStrategyTest
 {
@@ -60,7 +58,7 @@ class EmbeddedReferenceCollectionTest extends AbstractMongoStrategyTest
     }
 
     /**
-     * Create a reference in the database:
+     * Create a reference in the database:.
      *
      * @param $name
      *

@@ -6,9 +6,7 @@ use Doctrine\ODM\MongoDB\Tests\BaseTest;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
- * Class AbstractMongoStrategyTest
- *
- * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * Class AbstractMongoStrategyTest.
  */
 abstract class AbstractMongoStrategyTest extends BaseTest
 {

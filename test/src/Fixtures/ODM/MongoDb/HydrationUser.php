@@ -6,9 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
- * Class HydrationUser
+ * Class HydrationUser.
  *
- * @package PhproTest\DoctrineHydrationModule\Tests\Fixtures\ODM\MongoDb
  *
  * @ODM\Document
  */
@@ -22,12 +21,14 @@ class HydrationUser
 
     /**
      * @ODM\Date
+     *
      * @var \DateTime
      */
     public $birthday;
 
     /**
      * @ODM\Timestamp
+     *
      * @var \DateTime
      */
     public $createdAt;
@@ -39,6 +40,7 @@ class HydrationUser
 
     /**
      * @ODM\ReferenceMany(targetDocument="HydrationReferenceMany")
+     *
      * @var ArrayCollection
      */
     public $referenceMany = array();
@@ -50,12 +52,13 @@ class HydrationUser
 
     /**
      * @ODM\EmbedMany(targetDocument="HydrationEmbedMany")
+     *
      * @var ArrayCollection
      */
     public $embedMany;
 
     /**
-     * Basic state
+     * Basic state.
      */
     public function __construct()
     {

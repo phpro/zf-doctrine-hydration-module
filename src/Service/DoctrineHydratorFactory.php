@@ -3,7 +3,6 @@
  * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
  */
-
 namespace Phpro\DoctrineHydrationModule\Service;
 
 use Doctrine\Common\Persistence\ObjectManager;
@@ -27,9 +26,7 @@ use Zend\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface;
 use Zend\Stdlib\Hydrator\NamingStrategyEnabledInterface;
 
 /**
- * Class DoctrineHydratorFactory
- *
- * @package Phpro\DoctrineHydrationModule\Service
+ * Class DoctrineHydratorFactory.
  */
 class DoctrineHydratorFactory implements AbstractFactoryInterface
 {
@@ -39,19 +36,21 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     const OBJECT_MANAGER_TYPE_ORM = 'ORM';
 
     /**
-     * Cache of canCreateServiceWithName lookups
+     * Cache of canCreateServiceWithName lookups.
+     *
      * @var array
      */
     protected $lookupCache = array();
 
     /**
-     * Determine if we can create a service with name
+     * Determine if we can create a service with name.
      *
      * @param ServiceLocatorInterface $hydratorManager
      * @param                         $name
      * @param                         $requestedName
      *
      * @return bool
+     *
      * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
      */
     public function canCreateServiceWithName(ServiceLocatorInterface $hydratorManager, $name, $requestedName)
@@ -149,6 +148,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      * @param $objectManager
      *
      * @return string
+     *
      * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
      */
     protected function getObjectManagerType($objectManager)
@@ -169,6 +169,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
      * @param                         $config
      *
      * @return ObjectManager
+     *
      * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
      */
     protected function loadObjectManager(ServiceLocatorInterface $serviceManager, $config)

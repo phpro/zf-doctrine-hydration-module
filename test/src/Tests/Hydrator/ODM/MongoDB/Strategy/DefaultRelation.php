@@ -7,9 +7,7 @@ use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
- * Class EmbeddedFieldTest
- *
- * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * Class EmbeddedFieldTest.
  */
 class DefaultRelation extends AbstractMongoStrategyTest
 {

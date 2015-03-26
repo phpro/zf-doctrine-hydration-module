@@ -3,16 +3,12 @@
  * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
  * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
  */
-
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
-use DoctrineModule\Stdlib\Hydrator;
 
 /**
- * Class PersistentCollection
- *
- * @package Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM\MongoDB
+ * Class PersistentCollection.
  */
 class DefaultRelation extends AbstractMongoStrategy
 {
@@ -20,6 +16,7 @@ class DefaultRelation extends AbstractMongoStrategy
      * @param mixed $value
      *
      * @return array|mixed
+     *
      * @throws \Exception
      */
     public function extract($value)

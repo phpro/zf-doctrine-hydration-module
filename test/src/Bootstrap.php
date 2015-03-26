@@ -1,6 +1,5 @@
 <?php
 
-
 namespace PhproTest\DoctrineHydrationModule;
 
 error_reporting(E_ALL | E_STRICT);
@@ -14,8 +13,6 @@ if (!file_exists($autoloadFile)) {
 
 /**
  * Test bootstrap, for setting up autoloading etc.
- *
- * @package PhproTest\DoctrineHydrationModule
  */
 class Bootstrap
 {
@@ -33,7 +30,7 @@ class Bootstrap
     }
 
     /**
-     * Bootstrap the tests:
+     * Bootstrap the tests:.
      */
     public function init()
     {
@@ -42,7 +39,7 @@ class Bootstrap
     }
 
     /**
-     * Add dependencies:
+     * Add dependencies:.
      */
     protected function initAutoLoading()
     {
@@ -55,7 +52,7 @@ class Bootstrap
     }
 
     /**
-     * Load all doctrine ODM configuration:
+     * Load all doctrine ODM configuration:.
      */
     protected function configureDoctrineODM()
     {

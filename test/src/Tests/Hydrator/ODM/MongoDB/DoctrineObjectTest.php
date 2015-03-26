@@ -11,9 +11,7 @@ use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceOne
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 
 /**
- * Class DoctrineObjectTest
- *
- * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB
+ * Class DoctrineObjectTest.
  */
 class DoctrineObjectTest extends BaseTest
 {

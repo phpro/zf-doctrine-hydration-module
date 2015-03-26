@@ -6,9 +6,7 @@ use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\DateTimeField;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
- * Class DateTimeFieldTest
- *
- * @package PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy
+ * Class DateTimeFieldTest.
  */
 class DateTimeFieldTest extends \PHPUnit_Framework_TestCase
 {

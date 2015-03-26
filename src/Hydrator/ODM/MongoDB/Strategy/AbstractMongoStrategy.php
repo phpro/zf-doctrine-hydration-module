@@ -9,9 +9,7 @@ use DoctrineModule\Stdlib\Hydrator\Strategy\AllowRemoveByValue;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\DoctrineObject;
 
 /**
- * Abstract AbstractMongoStrategy
- *
- * @package Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy
+ * Abstract AbstractMongoStrategy.
  */
 abstract class AbstractMongoStrategy
     extends AbstractCollectionStrategy
@@ -23,7 +21,7 @@ abstract class AbstractMongoStrategy
     protected $objectManager;
 
     /**
-     * Set the object manager
+     * Set the object manager.
      *
      * @param ObjectManager $objectManager
      */
@@ -33,7 +31,7 @@ abstract class AbstractMongoStrategy
     }
 
     /**
-     * Get the object manager
+     * Get the object manager.
      *
      * @return ObjectManager
      */
@@ -43,7 +41,6 @@ abstract class AbstractMongoStrategy
     }
 
     /**
-     *
      * @param ObjectManager $objectManager Possibly injected by hydrator factory
      */
     public function __construct($objectManager = null)
@@ -70,7 +67,7 @@ abstract class AbstractMongoStrategy
     }
 
     /**
-     * Use default collection strategy
+     * Use default collection strategy.
      *
      * @param $value
      *

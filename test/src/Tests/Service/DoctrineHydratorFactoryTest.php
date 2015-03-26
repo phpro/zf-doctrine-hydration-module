@@ -7,9 +7,7 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\Hydrator\HydratorPluginManager;
 
 /**
- * Class DoctrineHydratorFactoryTest
- *
- * @package PhproTest\DoctrineHydrationModule\Tests\Service
+ * Class DoctrineHydratorFactoryTest.
  */
 class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,7 +27,7 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
     protected $serviceManager;
 
     /**
-     * Setup the service manager
+     * Setup the service manager.
      */
     protected function setUp()
     {

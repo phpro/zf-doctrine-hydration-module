@@ -9,9 +9,7 @@ use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\AbstractMongoStr
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\DateTimeField;
 
 /**
- * Class DoctrineObject
- *
- * @package Phpro\DoctrineHydrationModule\Hydrator\Strategy\ODM
+ * Class DoctrineObject.
  */
 class DoctrineObject extends BaseHydrator
 {
@@ -30,7 +28,7 @@ class DoctrineObject extends BaseHydrator
     }
 
     /**
-     * Add custom strategies to specific field types
+     * Add custom strategies to specific field types.
      */
     protected function prepareFieldStrategies()
     {
@@ -49,7 +47,7 @@ class DoctrineObject extends BaseHydrator
     }
 
     /**
-     * Add custom strategies to association fields
+     * Add custom strategies to association fields.
      */
     protected function prepareAssociationStrategies()
     {
@@ -92,7 +90,7 @@ class DoctrineObject extends BaseHydrator
     }
 
     /**
-     * Inject dependencies to strategy that is injected in a later state
+     * Inject dependencies to strategy that is injected in a later state.
      *
      * @param $strategy
      * @param $association
@@ -110,7 +108,7 @@ class DoctrineObject extends BaseHydrator
     }
 
     /**
-     * Make sure to only use the mongoDB ODM strategies for onMany
+     * Make sure to only use the mongoDB ODM strategies for onMany.
      *
      * @param object $object
      * @param mixed  $collectionName

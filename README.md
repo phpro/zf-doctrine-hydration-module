@@ -13,7 +13,7 @@ It is also possible to hydrate advanced documents with discriminator maps.
 
 ## Add to composer.json
 ```
-"phpro/doctrine-hydration-module": "dev-master"
+composer require phpro/zf-doctrine-hydration-module:~0.1
 ```
 
 ## Add to application config

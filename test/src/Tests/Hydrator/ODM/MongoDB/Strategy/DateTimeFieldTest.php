@@ -3,7 +3,6 @@
 namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\DateTimeField;
-use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class DateTimeFieldTest.

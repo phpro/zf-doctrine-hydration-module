@@ -109,8 +109,8 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
     {
         $serviceManager = $hydratorManager->getServiceLocator();
 
-        $config   = $serviceManager->get('Config');
-        $config   = $config[self::FACTORY_NAMESPACE][$requestedName];
+        $config = $serviceManager->get('Config');
+        $config = $config[self::FACTORY_NAMESPACE][$requestedName];
 
         $objectManager = $this->loadObjectManager($serviceManager, $config);
 
@@ -320,7 +320,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         foreach ($config['filters'] as $name => $filterConfig) {
             $conditionMap = array(
                 'and' => FilterComposite::CONDITION_AND,
-                'or'  => FilterComposite::CONDITION_OR,
+                'or' => FilterComposite::CONDITION_OR,
             );
             $condition = isset($filterConfig['condition']) ?
                             $conditionMap[$filterConfig['condition']] :

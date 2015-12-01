@@ -2,7 +2,6 @@
 
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
-use Zend\Form\Element\DateTime;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
@@ -11,7 +10,7 @@ use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 class DateTimeField implements StrategyInterface
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $isTimestamp;
 

@@ -52,8 +52,49 @@ return array(
 );
 ```
 
-use_generated_hydrator will only be used with mongoDB ODM and will use the generated hydrators instead of the Doctrine Module Hydrator.
+`entity_class`
+ 
+This property is used to specify the class of the entity that will be hydrated. You need to make sure that this entity is a mapped doctrine class.
+
+  
+`object_manager`
+
+You can specify which object manager you want to use for the hydrator. The value is the key of the desired object manager in the service manager.
+
+
+`by_value`
+
+Specify if you want the hydrator to hydrate the entity by value or by reference.
+
+
+`use_generated_hydrator` 
+
+This property will only be used with mongoDB ODM and will use the generated hydrators instead of the Doctrine Module Hydrator.
 Strategies will not work when this option is set to `true`.
+
+
+`naming_strategy`
+
+You can use a custom naming strategy for the hydrator. Specify the key of the naming strategy in the service manager.
+Note that this naming strategy needs to implement `NamingStrategyInterface`.
+
+`hydrator`
+You can use a custom hydrator instead of the default `DoctrineObject` hydrator. 
+Make sure this hydrator implements `HydratorInterface`. 
+
+
+`strategies`
+
+It is possible to customize the hydration strategy of specific properties. 
+Configure the property you want to customize with the key of the strategy in the service manager;
+Note that this strategy needs to implement `StrategyInterface`.
+
+
+`filters`
+
+This property can be used to apply filters on the Hydrator. 
+You can specify a list of custom filters by defining the key of the filter in the service manager and the filter condition as described in the hydrator filter documentation.
+Note that this filter needs to implement `FilterInterface`.
 
 
 From here on, you can get the hydrator by calling `get('hydrator-manager-key')` on the HydratorManager.

@@ -60,24 +60,26 @@ class DoctrineObject extends BaseHydrator
                 continue;
             }
 
-            // Create new strategy based on type of filed
-            $fieldMeta = $this->metadata->fieldMappings[$association];
-            $reference = isset($fieldMeta['reference']) && $fieldMeta['reference'];
-            $embedded = isset($fieldMeta['embedded']) && $fieldMeta['embedded'];
-            $isCollection = $this->metadata->isCollectionValuedAssociation($association);
-            $strategy = null;
-
-            if ($isCollection) {
-                if ($reference) {
-                    $strategy = new Strategy\ReferencedCollection($this->objectManager);
-                } elseif ($embedded) {
-                    $strategy = new Strategy\EmbeddedCollection($this->objectManager);
-                }
-            } else {
-                if ($reference) {
-                    $strategy = new Strategy\ReferencedField($this->objectManager);
-                } elseif ($embedded) {
-                    $strategy = new Strategy\EmbeddedField($this->objectManager);
+            if (isset($this->metadata->fieldMappings[$association])) {
+                // Create new strategy based on type of filed
+                $fieldMeta = $this->metadata->fieldMappings[$association];
+                $reference = isset($fieldMeta['reference']) && $fieldMeta['reference'];
+                $embedded = isset($fieldMeta['embedded']) && $fieldMeta['embedded'];
+                $isCollection = $this->metadata->isCollectionValuedAssociation($association);
+                $strategy = null;
+    
+                if ($isCollection) {
+                    if ($reference) {
+                        $strategy = new Strategy\ReferencedCollection($this->objectManager);
+                    } elseif ($embedded) {
+                        $strategy = new Strategy\EmbeddedCollection($this->objectManager);
+                    }
+                } else {
+                    if ($reference) {
+                        $strategy = new Strategy\ReferencedField($this->objectManager);
+                    } elseif ($embedded) {
+                        $strategy = new Strategy\EmbeddedField($this->objectManager);
+                    }
                 }
             }
 

@@ -1,4 +1,6 @@
 [![Build status](https://api.travis-ci.org/phpro/zf-doctrine-hydration-module.svg)](http://travis-ci.org/phpro/zf-doctrine-hydration-module)
+[![Packagist](https://img.shields.io/packagist/v/phpro/zf-doctrine-hydration-module.svg)](https://packagist.org/packages/phpro/zf-doctrine-hydration-module)
+[![Downloads](https://img.shields.io/packagist/dt/phpro/zf-doctrine-hydration-module.svg)](https://packagist.org/packages/phpro/zf-doctrine-hydration-module)
 
 # Doctrine Hydration Module
 This module provides a configurable way to create new doctrine hydrators.

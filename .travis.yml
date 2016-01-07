@@ -5,10 +5,6 @@ cache:
   directories:
     - $HOME/.composer/cache
 
-env:
-  - MONGO_VERSION=1.5.8
-  - MONGO_VERSION=stable
-
 services:
   - mongodb
 
@@ -28,7 +24,7 @@ before_script:
   - composer self-update
 
 install:
-  - yes '' | pecl -q install -f mongo-${MONGO_VERSION} && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+  - yes '' | pecl -q install -f mongo-1.5.8 && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - if [ "$DEPENDENCIES" != "low" ]; then composer update --prefer-dist --no-scripts --no-interaction; fi;
   - if [ "$DEPENDENCIES" == "low" ]; then composer update --prefer-lowest --no-scripts --no-interaction; fi;
 

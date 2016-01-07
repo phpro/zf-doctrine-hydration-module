@@ -24,8 +24,6 @@ install:
 # Add PSR-4 support when https://github.com/fabpot/PHP-CS-Fixer/issues/311 is solved
 script:
   - ./vendor/bin/grumphp run
-  - ./vendor/bin/php-cs-fixer fix . --dry-run  --fixers=-psr0
-  - ./vendor/bin/phpunit
 
 services:
   - mongodb

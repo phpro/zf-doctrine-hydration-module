@@ -19,7 +19,7 @@ class EmbeddedField extends AbstractMongoStrategy
      */
     public function extract($value)
     {
-        $hydrator = $this->getDoctrineHydrator($value);
+        $hydrator = $this->getDoctrineHydrator();
 
         return $hydrator->extract($value);
     }
@@ -41,7 +41,7 @@ class EmbeddedField extends AbstractMongoStrategy
         $instantiator = new Instantiator();
         $object = $instantiator->instantiate($targetDocument);
 
-        $hydrator = $this->getDoctrineHydrator($targetDocument);
+        $hydrator = $this->getDoctrineHydrator();
         $hydrator->hydrate($value, $object);
 
         return $object;

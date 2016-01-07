@@ -6,9 +6,6 @@ use Phpro\DoctrineHydrationModule\Service\DoctrineHydratorFactory;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\Hydrator\HydratorPluginManager;
 
-/**
- * Class DoctrineHydratorFactoryTest.
- */
 class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**

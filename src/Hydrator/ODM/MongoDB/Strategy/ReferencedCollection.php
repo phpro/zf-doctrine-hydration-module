@@ -1,14 +1,10 @@
 <?php
-/**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
- */
+
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Common\Collections\Collection;
 
 /**
- * TODO: referenced hydrators.
  *
  * Class PersistentCollection
  */
@@ -57,7 +53,6 @@ class ReferencedCollection extends AbstractMongoStrategy
     }
 
     /**
-     * TODO: use ReferencedField.
      *
      * @param $targetDocument
      * @param $document

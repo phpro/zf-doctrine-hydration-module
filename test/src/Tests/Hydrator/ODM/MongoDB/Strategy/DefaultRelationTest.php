@@ -3,13 +3,14 @@
 namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\DefaultRelation as StrategyDefaultRelation;
+use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedMany;
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class EmbeddedFieldTest.
  */
-class DefaultRelation extends AbstractMongoStrategyTest
+class DefaultRelationTest extends AbstractMongoStrategyTest
 {
     /**
      * @return StrategyInterface
@@ -47,11 +48,12 @@ class DefaultRelation extends AbstractMongoStrategyTest
         $user->setId(1);
         $user->setName('username');
 
+        $embedded = new HydrationEmbedMany();
+        $embedded->setId(1);
+        $embedded->setName('name');
+
         $data = array(
-            array(
-                'id' => 1,
-                'name' => 'name',
-            ),
+            $embedded
         );
 
         $strategy = $this->getStrategy($this->dm, $user, 'embedMany');

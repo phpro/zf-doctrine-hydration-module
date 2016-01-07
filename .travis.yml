@@ -1,8 +1,16 @@
+sudo: false
 language: php
 
 cache:
   directories:
     - $HOME/.composer/cache
+
+env:
+  - MONGO_VERSION=1.5.8
+  - MONGO_VERSION=stable
+
+services:
+  - mongodb
 
 matrix:
   fast_finish: true
@@ -20,13 +28,9 @@ before_script:
   - composer self-update
 
 install:
-  - pecl install -f mongo-1.4.1
+  - yes '' | pecl -q install -f mongo-${MONGO_VERSION} && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - if [ "$DEPENDENCIES" != "low" ]; then composer update --prefer-dist --no-scripts --no-interaction; fi;
   - if [ "$DEPENDENCIES" == "low" ]; then composer update --prefer-lowest --no-scripts --no-interaction; fi;
 
-# Add PSR-4 support when https://github.com/fabpot/PHP-CS-Fixer/issues/311 is solved
 script:
   - ./vendor/bin/grumphp run
-
-services:
-  - mongodb

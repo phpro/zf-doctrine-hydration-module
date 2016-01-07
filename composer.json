@@ -24,7 +24,7 @@
     },
     "require-dev": {
         "fabpot/PHP-CS-Fixer": "~1.10",
-        "phpunit/phpunit": "~5.1",
+        "phpunit/phpunit": "~4.8",
         "doctrine/doctrine-orm-module": "~0.9",
         "doctrine/doctrine-mongo-odm-module": "~0.9",
         "doctrine/mongodb-odm": "~1.0",

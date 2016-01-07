@@ -19,7 +19,7 @@ matrix:
       env: DEPENDENCIES='low'
     - php: 7.0
 
-before_script:
+before_install:
   - phpenv config-add .travis-config.ini || return 0
   - composer self-update
 

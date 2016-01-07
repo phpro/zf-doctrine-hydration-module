@@ -6,7 +6,7 @@ use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedCollecti
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationEmbedMany;
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUserWithAssocEmbedMany;
-use Zend\Hydrator\Strategy\StrategyInterface;
+use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class EmbeddedCollectionTest.

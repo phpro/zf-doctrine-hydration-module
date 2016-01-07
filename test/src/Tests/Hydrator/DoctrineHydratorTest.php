@@ -17,8 +17,8 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createHydrator($hydrateService = null, $extractService = null)
     {
-        $hydrateService = $hydrateService ? $hydrateService : $this->getMock('Zend\Hydrator\HydratorInterface');
-        $extractService = $extractService ? $extractService : $this->getMock('Zend\Hydrator\HydratorInterface');
+        $hydrateService = $hydrateService ? $hydrateService : $this->getMock('Zend\Stdlib\Hydrator\HydratorInterface');
+        $extractService = $extractService ? $extractService : $this->getMock('Zend\Stdlib\Hydrator\HydratorInterface');
 
         return new DoctrineHydrator($extractService, $hydrateService);
     }
@@ -38,7 +38,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
     public function it_should_have_a_hydrator_service()
     {
         $hydrator = $this->createHydrator();
-        $this->assertInstanceOf('Zend\Hydrator\HydratorInterface', $hydrator->getHydrateService());
+        $this->assertInstanceOf('Zend\Stdlib\Hydrator\HydratorInterface', $hydrator->getHydrateService());
     }
 
     /**
@@ -47,7 +47,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
     public function it_should_have_an_extractor_service()
     {
         $hydrator = $this->createHydrator();
-        $this->assertInstanceOf('Zend\Hydrator\HydratorInterface', $hydrator->getExtractService());
+        $this->assertInstanceOf('Zend\Stdlib\Hydrator\HydratorInterface', $hydrator->getExtractService());
     }
 
     /**
@@ -57,7 +57,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
     {
         $object = new \stdClass();
         $extracted = array('extracted' => true);
-        $extractService = $this->getMock('Zend\Hydrator\HydratorInterface');
+        $extractService = $this->getMock('Zend\Stdlib\Hydrator\HydratorInterface');
         $extractService
             ->expects($this->any())
             ->method('extract')
@@ -77,7 +77,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
         $object = new \stdClass();
         $data = array('field' => 'value');
 
-        $hydrateService = $this->getMock('Zend\Hydrator\HydratorInterface');
+        $hydrateService = $this->getMock('Zend\Stdlib\Hydrator\HydratorInterface');
         $hydrateService
             ->expects($this->any())
             ->method('hydrate')

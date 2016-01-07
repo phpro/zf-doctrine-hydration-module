@@ -34,7 +34,7 @@ class DateTimeFieldTest extends \PHPUnit_Framework_TestCase
     public function it_should_be_a_strategy_interface()
     {
         $strategy = $this->createStrategy();
-        $this->assertInstanceOf('Zend\Hydrator\Strategy\StrategyInterface', $strategy);
+        $this->assertInstanceOf('Zend\Stdlib\Hydrator\Strategy\StrategyInterface', $strategy);
     }
 
     /**

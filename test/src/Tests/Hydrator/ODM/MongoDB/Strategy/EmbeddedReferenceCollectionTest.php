@@ -5,7 +5,7 @@ namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\EmbeddedReferenceCollection;
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationReferenceMany;
 use PhproTest\DoctrineHydrationModule\Fixtures\ODM\MongoDb\HydrationUser;
-use Zend\Hydrator\Strategy\StrategyInterface;
+use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
 
 /**
  * Class EmbeddedReferenceCollectionTest.

@@ -51,19 +51,11 @@ abstract class AbstractMongoStrategy
     }
 
     /**
-     * @param $document
-     *
      * @return DoctrineObject
      */
-    protected function getDoctrineHydrator($document)
+    protected function getDoctrineHydrator()
     {
-        if (is_object($document)) {
-            $document = get_class($document);
-        }
-
-        $hydrator = new DoctrineObject($this->getObjectManager(), $document);
-
-        return $hydrator;
+        return new DoctrineObject($this->getObjectManager());
     }
 
     /**

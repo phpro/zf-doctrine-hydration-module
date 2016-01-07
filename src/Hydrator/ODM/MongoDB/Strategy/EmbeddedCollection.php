@@ -31,7 +31,7 @@ class EmbeddedCollection extends AbstractMongoStrategy
         $result = array();
         if ($value) {
             foreach ($value as $index => $object) {
-                $hydrator = $this->getDoctrineHydrator($object);
+                $hydrator = $this->getDoctrineHydrator();
                 $result[$index] = $hydrator->extract($object);
 
                 // Add discrimator field if it can be found.
@@ -93,7 +93,7 @@ class EmbeddedCollection extends AbstractMongoStrategy
         $instantiator = new Instantiator();
         $object = $instantiator->instantiate($targetDocument);
 
-        $hydrator = $this->getDoctrineHydrator($targetDocument);
+        $hydrator = $this->getDoctrineHydrator();
         $hydrator->hydrate($document, $object);
 
         return $object;

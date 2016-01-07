@@ -2,7 +2,7 @@
 
 namespace Phpro\DoctrineHydrationModule\Hydrator;
 
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Zend\Hydrator\HydratorInterface;
 
 /**
  * Class DoctrineHydrator.
@@ -31,7 +31,7 @@ class DoctrineHydrator
     }
 
     /**
-     * @return \Zend\Stdlib\Hydrator\HydratorInterface
+     * @return \Zend\Hydrator\HydratorInterface
      */
     public function getExtractService()
     {
@@ -39,7 +39,7 @@ class DoctrineHydrator
     }
 
     /**
-     * @return \Zend\Stdlib\Hydrator\HydratorInterface
+     * @return \Zend\Hydrator\HydratorInterface
      */
     public function getHydrateService()
     {

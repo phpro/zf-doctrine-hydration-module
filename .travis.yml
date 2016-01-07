@@ -18,6 +18,10 @@ matrix:
     - php: 5.6
       env: DEPENDENCIES='low'
     - php: 7.0
+  
+  # MongoDB is not supported in PHP7 yet: https://github.com/doctrine/mongodb/issues/239
+  allow_failures:
+    - php: 7.0
 
 before_install:
   - phpenv config-add .travis-config.ini || return 0

@@ -3,9 +3,9 @@
     "license": "MIT",
     "description": "Doctrine hydrators for ZF2",
     "keywords": [
-      "zf2",
-      "doctrine",
-      "hydrator"
+        "zf2",
+        "doctrine",
+        "hydrator"
     ],
     "authors": [
         {
@@ -14,20 +14,21 @@
         }
     ],
     "require": {
-      "php": ">=5.3.23",
-      "doctrine/common": ">=2.1",
-      "zendframework/zend-modulemanager": "2.*",
-      "zendframework/zend-servicemanager": "2.*",
-      "zendframework/zend-stdlib": "2.*",
-      "doctrine/doctrine-module": ">=0.8.0",
-      "doctrine/instantiator": "~1.0.4"
+        "php": ">=5.3.23",
+        "doctrine/common": "~2.1",
+        "zendframework/zend-modulemanager": "~2.0",
+        "zendframework/zend-servicemanager": "~2.0",
+        "zendframework/zend-stdlib": "~2.0 <2.7",
+        "doctrine/doctrine-module": "~0.8",
+        "doctrine/instantiator": "~1.0.4"
     },
     "require-dev": {
-      "fabpot/PHP-CS-Fixer": "*",
-      "phpunit/phpunit": "*",
-      "doctrine/doctrine-orm-module": "*",
-      "doctrine/doctrine-mongo-odm-module": "*",
-      "doctrine/mongodb-odm": "@dev"
+        "fabpot/PHP-CS-Fixer": "~1.10",
+        "phpunit/phpunit": "~5.1",
+        "doctrine/doctrine-orm-module": "~0.9",
+        "doctrine/doctrine-mongo-odm-module": "~0.9",
+        "doctrine/mongodb-odm": "~1.0",
+        "phpro/grumphp": "~0.7"
     },
     "autoload": {
       "psr-4": {

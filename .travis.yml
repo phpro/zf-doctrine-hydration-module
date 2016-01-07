@@ -1,21 +1,29 @@
 language: php
-php:
-  - 5.5
-  - 5.4
-  - 5.3
-  - hhvm
 
 matrix:
-  allow_failures:
-    - php: hhvm
+  include:
+    - php: 5.3
+    - php: 5.3
+      env: DEPENDENCIES='low'
+    - php: 5.4
+    - php: 5.5
+    - php: 5.6
+    - php: 5.6
+      env: DEPENDENCIES='low'
+    - php: 7.0
+  fast_finish: true
 
 before_script:
   - phpenv config-add .travis-config.ini
   - composer self-update
-  - composer install --dev --prefer-source
+
+install:
+  - if [ "$DEPENDENCIES" != "low" ]; then composer update --prefer-dist --no-scripts --no-interaction; fi;
+  - if [ "$DEPENDENCIES" == "low" ]; then composer update --prefer-lowest --no-scripts --no-interaction; fi;
 
 # Add PSR-4 support when https://github.com/fabpot/PHP-CS-Fixer/issues/311 is solved
 script:
+  - ./vendor/bin/grumphp run
   - ./vendor/bin/php-cs-fixer fix . --dry-run  --fixers=-psr0
   - ./vendor/bin/phpunit
 

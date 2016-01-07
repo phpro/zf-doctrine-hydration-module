@@ -135,7 +135,7 @@ return array(
 );
 
 ```
-In this example configuration, the hydrator factory will retrieve `custom.filter` from the Service Manager and inject it as a filter into the hydrator. The filter must implement `Zend\Stdlib\Hydrator\Filter\FilterInterface`. 
+In this example configuration, the hydrator factory will retrieve `custom.filter` from the Service Manager and inject it as a filter into the hydrator. The filter must implement `Zend\Hydrator\Filter\FilterInterface`. 
 
 The service's `filter($fieldName)` function will be called by the hydrator during `extract` and the field name being extracted will be passed as an argument. The `filter()` function must return a truthy value: if `true` then the field will NOT be extracted.
 
@@ -149,7 +149,7 @@ return array(
     'doctrine-hydrator' => array(
         'custom-hydrator' => array(
             // other config
-            'hydrator' => 'Zend\Stdlib\Hydrator\ArraySerializable'
+            'hydrator' => 'Zend\Hydrator\ArraySerializable'
         ),
     ),
 );

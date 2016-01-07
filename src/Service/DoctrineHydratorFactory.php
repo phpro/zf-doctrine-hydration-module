@@ -12,15 +12,15 @@ use Zend\ServiceManager\Exception\ServiceNotCreatedException;
 use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\Exception\InvalidCallbackException;
-use Zend\Stdlib\Hydrator\AbstractHydrator;
-use Zend\Stdlib\Hydrator\Filter\FilterComposite;
-use Zend\Stdlib\Hydrator\Filter\FilterInterface;
-use Zend\Stdlib\Hydrator\FilterEnabledInterface;
-use Zend\Stdlib\Hydrator\HydratorInterface;
-use Zend\Stdlib\Hydrator\Strategy\StrategyInterface;
-use Zend\Stdlib\Hydrator\StrategyEnabledInterface;
-use Zend\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface;
-use Zend\Stdlib\Hydrator\NamingStrategyEnabledInterface;
+use Zend\Hydrator\AbstractHydrator;
+use Zend\Hydrator\Filter\FilterComposite;
+use Zend\Hydrator\Filter\FilterInterface;
+use Zend\Hydrator\FilterEnabledInterface;
+use Zend\Hydrator\HydratorInterface;
+use Zend\Hydrator\Strategy\StrategyInterface;
+use Zend\Hydrator\StrategyEnabledInterface;
+use Zend\Hydrator\NamingStrategy\NamingStrategyInterface;
+use Zend\Hydrator\NamingStrategyEnabledInterface;
 
 /**
  * Class DoctrineHydratorFactory.

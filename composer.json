@@ -28,7 +28,7 @@
         "phpunit/phpunit": "~4.8",
         "doctrine/doctrine-orm-module": "~0.9",
         "doctrine/doctrine-mongo-odm-module": "~0.9",
-        "doctrine/mongodb-odm": "~1.0",
+        "doctrine/mongodb-odm": "~1.1",
         "phpro/grumphp": "~0.7"
     },
     "autoload": {

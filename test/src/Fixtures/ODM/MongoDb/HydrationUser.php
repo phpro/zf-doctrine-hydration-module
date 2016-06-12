@@ -16,11 +16,11 @@ class HydrationUser
     /** @ODM\Id */
     public $id;
 
-    /** @ODM\String */
+    /** @ODM\Field(type="string") */
     public $name;
 
     /**
-     * @ODM\Date
+     * @ODM\Field(type="date")
      *
      * @var \DateTime
      */

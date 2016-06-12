@@ -10,7 +10,7 @@ class HydrationReferenceMany
     /** @ODM\Id */
     public $id;
 
-    /** @ODM\String */
+    /** @ODM\Field(type="string") */
     public $name;
 
     /**

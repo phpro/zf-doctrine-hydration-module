@@ -8,9 +8,6 @@ cache:
 services:
   - mongodb
 
-env:
-  - DOCTRINE_MONGODB_SERVER=mongodb://localhost:27017
-
 matrix:
   fast_finish: true
   include:

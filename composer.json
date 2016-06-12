@@ -18,9 +18,10 @@
         "doctrine/common": "~2.1",
         "zendframework/zend-modulemanager": "~2.0",
         "zendframework/zend-servicemanager": "~2.0",
-        "zendframework/zend-hydrator": "~2.0",
-        "doctrine/doctrine-module": "~0.8",
-        "doctrine/instantiator": "~1.0.4"
+        "zendframework/zend-hydrator": "~1.0 || ^2.0",
+        "doctrine/doctrine-module": "~1.0",
+        "doctrine/instantiator": "~1.0.4",
+        "api-skeletons/zf-doctrine-module-zend-hydrator": "~0.1.1"
     },
     "require-dev": {
         "fabpot/PHP-CS-Fixer": "~1.10",

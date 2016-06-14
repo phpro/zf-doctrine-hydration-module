@@ -11,11 +11,19 @@ For ORM, the basic hydrator from the doctrine module is being used. It is possib
 For MongoDB ODM, a specific hydrator is added. This hydrator will be able to handle Referenced documents and Embedded Documents.
 It is also possible to hydrate advanced documents with discriminator maps.
 
-#Installation
+# Supported installations
+Both the master and the 0.1 branches are actively maintained. 
+
+* master: Contains zend-hydrator support requiring PHP 5.5+.
+* 0.1: Contains zend-stdlib <2.7 support requiring PHP 5.4+.
+
+We will try to keep both versions in sync and fully compatible as much as possible.
+
+# Installation
 
 ## Add to composer.json
 ```
-composer require phpro/zf-doctrine-hydration-module:~0.1
+composer require phpro/zf-doctrine-hydration-module:~0.2
 ```
 
 ## Add to application config
@@ -135,7 +143,7 @@ return array(
 );
 
 ```
-In this example configuration, the hydrator factory will retrieve `custom.filter` from the Service Manager and inject it as a filter into the hydrator. The filter must implement `Zend\Stdlib\Hydrator\Filter\FilterInterface`. 
+In this example configuration, the hydrator factory will retrieve `custom.filter` from the Service Manager and inject it as a filter into the hydrator. The filter must implement `Zend\Hydrator\Filter\FilterInterface`. 
 
 The service's `filter($fieldName)` function will be called by the hydrator during `extract` and the field name being extracted will be passed as an argument. The `filter()` function must return a truthy value: if `true` then the field will NOT be extracted.
 
@@ -149,7 +157,7 @@ return array(
     'doctrine-hydrator' => array(
         'custom-hydrator' => array(
             // other config
-            'hydrator' => 'Zend\Stdlib\Hydrator\ArraySerializable'
+            'hydrator' => 'Zend\Hydrator\ArraySerializable'
         ),
     ),
 );

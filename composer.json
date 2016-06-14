@@ -18,16 +18,17 @@
         "doctrine/common": "~2.1",
         "zendframework/zend-modulemanager": "~2.0",
         "zendframework/zend-servicemanager": "~2.0",
-        "zendframework/zend-stdlib": "~2.0 <2.7",
-        "doctrine/doctrine-module": "~0.8",
-        "doctrine/instantiator": "~1.0.4"
+        "zendframework/zend-hydrator": "~1.0 || ^2.0",
+        "doctrine/doctrine-module": "~1.0",
+        "doctrine/instantiator": "~1.0.4",
+        "api-skeletons/zf-doctrine-module-zend-hydrator": "~0.1.1"
     },
     "require-dev": {
         "fabpot/PHP-CS-Fixer": "~1.10",
         "phpunit/phpunit": "~4.8",
         "doctrine/doctrine-orm-module": "~0.9",
         "doctrine/doctrine-mongo-odm-module": "~0.9",
-        "doctrine/mongodb-odm": "~1.0",
+        "doctrine/mongodb-odm": "~1.1",
         "phpro/grumphp": "~0.7"
     },
     "autoload": {

@@ -11,19 +11,19 @@ For ORM, the basic hydrator from the doctrine module is being used. It is possib
 For MongoDB ODM, a specific hydrator is added. This hydrator will be able to handle Referenced documents and Embedded Documents.
 It is also possible to hydrate advanced documents with discriminator maps.
 
-# Supported installations
-Both the master and the 0.1 branches are actively maintained. 
+# Supported features 
 
-* master: Contains zend-hydrator support requiring PHP 5.5+.
-* 0.1: Contains zend-stdlib <2.7 support requiring PHP 5.4+.
+* 2.0.x: Contains zend-hydrator support requiring PHP 5.6+.
+* 1.0.x: Contains zend-stdlib <2.7 support requiring PHP 5.4+.
 
 We will try to keep both versions in sync and fully compatible as much as possible.
+Make sure to commit on the correct branch if you want your changes to get merged into the project.
 
 # Installation
 
 ## Add to composer.json
 ```
-composer require phpro/zf-doctrine-hydration-module:~0.2
+composer require phpro/zf-doctrine-hydration-module:^2.0
 ```
 
 ## Add to application config

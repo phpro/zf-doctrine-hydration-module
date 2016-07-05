@@ -19,6 +19,25 @@ class EmbeddedFieldTest extends AbstractMongoStrategyTest
     {
         return new EmbeddedField();
     }
+    
+    /**
+     * @test
+     */
+    public function it_should_not_break_when_embed_field_not_set()
+    {
+        $user = new HydrationUser();
+        $user->setId(1);
+        $user->setName('username');
+
+        $embedded = new HydrationEmbedOne();
+        $embedded->setId(1);
+        $embedded->setName('name');
+        //$user->setEmbedOne($embedded);
+
+        $strategy = $this->getStrategy($this->dm, $user, 'embedOne');
+        $result = $strategy->extract($user->getEmbedOne());
+        $this->assertEquals('name', $result['name']);
+    }
 
     /**
      * @test

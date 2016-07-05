@@ -10,12 +10,15 @@ use Doctrine\Instantiator\Instantiator;
 class EmbeddedField extends AbstractMongoStrategy
 {
     /**
-     * @param mixed $value
+     * @param object $value
      *
      * @return mixed
      */
     public function extract($value)
     {
+        if(!is_object($value)){
+            return;
+        }
         $hydrator = $this->getDoctrineHydrator();
 
         return $hydrator->extract($value);

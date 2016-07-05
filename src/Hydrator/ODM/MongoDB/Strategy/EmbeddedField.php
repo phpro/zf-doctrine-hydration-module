@@ -17,7 +17,7 @@ class EmbeddedField extends AbstractMongoStrategy
     public function extract($value)
     {
         if(!is_object($value)){
-            return;
+           // return;
         }
         $hydrator = $this->getDoctrineHydrator();
 

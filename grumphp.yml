@@ -1,0 +1,10 @@
+parameters:
+    git_dir: .
+    bin_dir: ./vendor/bin
+    tasks:
+        phpcsfixer:
+          config_file: ~
+          level: psr2
+          fixers:
+            - "-psr0" # Codebase is PSR 4
+        phpunit: ~

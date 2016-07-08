@@ -1,5 +1,4 @@
 <?php
-
 namespace Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy;
 
 use Doctrine\Instantiator\Instantiator;
@@ -9,19 +8,25 @@ use Doctrine\Instantiator\Instantiator;
  */
 class EmbeddedField extends AbstractMongoStrategy
 {
+
     /**
-     * @param mixed $value
+     *
+     * @param object $value
      *
      * @return mixed
      */
     public function extract($value)
     {
+        if (! is_object($value)) {
+            return $value;
+        }
         $hydrator = $this->getDoctrineHydrator();
 
         return $hydrator->extract($value);
     }
 
     /**
+     *
      * @param mixed $value
      *
      * @return array|mixed

@@ -8,7 +8,6 @@ use Doctrine\Instantiator\Instantiator;
  */
 class EmbeddedField extends AbstractMongoStrategy
 {
-
     /**
      *
      * @param object $value

@@ -11,9 +11,7 @@ use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\DoctrineObject;
 /**
  * Abstract AbstractMongoStrategy.
  */
-abstract class AbstractMongoStrategy
-    extends AbstractCollectionStrategy
-    implements ObjectManagerAwareInterface
+abstract class AbstractMongoStrategy extends AbstractCollectionStrategy implements ObjectManagerAwareInterface
 {
     /**
      * @var ObjectManager

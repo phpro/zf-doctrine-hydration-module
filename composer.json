@@ -16,15 +16,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/webimpress/DoctrineModule"
-    },
-    {
-      "type": "vcs",
       "url": "https://github.com/webimpress/DoctrineMongoODMModule"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/webimpress/DoctrineORMModule"
     }
   ],
   "require": {
@@ -33,14 +25,14 @@
     "zendframework/zend-servicemanager": "^2.7.6 || ^3.1.1",
     "zendframework/zend-hydrator": "^1.1 || ^2.2.1",
     "api-skeletons/zf-doctrine-module-zend-hydrator": "^1.0",
-    "doctrine/doctrine-module": "dev-feature/zf3compat as 1.0",
+    "doctrine/doctrine-module": "dev-master as 1.0",
     "doctrine/instantiator": "^1.0.5"
   },
   "require-dev": {
     "fabpot/PHP-CS-Fixer": "^1.11.6",
     "phpunit/phpunit": "^4.8",
     "zendframework/zend-modulemanager": "^2.7.2",
-    "doctrine/doctrine-orm-module": "dev-feature/zf3compat",
+    "doctrine/doctrine-orm-module": "dev-master",
     "doctrine/doctrine-mongo-odm-module": "dev-feature/zf3compat",
     "doctrine/mongodb-odm": "^1.1",
     "phpro/grumphp": "^0.9.1"

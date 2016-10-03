@@ -13,12 +13,6 @@
       "email": "toon.verwerft@phpro.be"
     }
   ],
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/webimpress/DoctrineMongoODMModule"
-    }
-  ],
   "extra": {
     "zf": {
       "module": "Phpro\\DoctrineHydrationModule"
@@ -30,15 +24,15 @@
     "zendframework/zend-servicemanager": "^2.7.6 || ^3.1",
     "zendframework/zend-hydrator": "^1.1 || ^2.2.1",
     "api-skeletons/zf-doctrine-module-zend-hydrator": "^1.0",
-    "doctrine/doctrine-module": "dev-master as 1.0",
+    "doctrine/doctrine-module": "^1.2",
     "doctrine/instantiator": "^1.0.5"
   },
   "require-dev": {
     "fabpot/PHP-CS-Fixer": "^1.11.6",
     "phpunit/phpunit": "^4.8",
     "zendframework/zend-modulemanager": "^2.7.2",
-    "doctrine/doctrine-orm-module": "dev-master",
-    "doctrine/doctrine-mongo-odm-module": "dev-feature/zf3compat",
+    "doctrine/doctrine-orm-module": "^1.1",
+    "doctrine/doctrine-mongo-odm-module": "^0.11",
     "doctrine/mongodb-odm": "^1.1",
     "phpro/grumphp": "^0.9.1"
   },

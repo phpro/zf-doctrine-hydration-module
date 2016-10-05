@@ -32,12 +32,15 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
 
         $this->serviceManager = new ServiceManager();
         $this->serviceManager->setAllowOverride(true);
-        $this->serviceManager->setService('Config', $this->serviceConfig);
+        $this->serviceManager->setService('config', $this->serviceConfig);
         $this->serviceManager->setService('custom.strategy', $this->getMock('Zend\Hydrator\Strategy\StrategyInterface'));
         $this->serviceManager->setService('custom.filter', $this->getMock('Zend\Hydrator\Filter\FilterInterface'));
         $this->serviceManager->setService('custom.naming_strategy', $this->getMock('Zend\Hydrator\NamingStrategy\NamingStrategyInterface'));
 
-        $this->hydratorManager = $this->getMock('Zend\Hydrator\HydratorPluginManager');
+        $this->hydratorManager = $this->getMockBuilder(HydratorPluginManager::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->hydratorManager
             ->expects($this->any())
             ->method('getServiceLocator')
@@ -146,7 +149,7 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
     public function it_should_create_a_custom_ODM_hydrator_which_uses_the_auto_generated_hydrators()
     {
         $this->serviceConfig['doctrine-hydrator']['custom-hydrator']['use_generated_hydrator'] = true;
-        $this->serviceManager->setService('Config', $this->serviceConfig);
+        $this->serviceManager->setService('config', $this->serviceConfig);
         $objectManager = $this->stubObjectManager('Doctrine\ODM\MongoDb\DocumentManager');
 
         $hydratorFactory = $this->getMock('Doctrine\ODM\MongoDB\Hydrator\HydratorFactory', array(), array(), '', false);
@@ -177,13 +180,9 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
     public function it_should_be_possible_to_configure_a_custom_hydrator()
     {
         $this->serviceConfig['doctrine-hydrator']['custom-hydrator']['hydrator'] = 'custom.hydrator';
-        $this->serviceManager->setService('Config', $this->serviceConfig);
+        $this->serviceManager->setService('config', $this->serviceConfig);
 
-        $this->hydratorManager
-            ->expects($this->once())
-            ->method('get')
-            ->with('custom.hydrator')
-            ->will($this->returnValue($this->getMock('Zend\Hydrator\ArraySerializable')));
+        $this->serviceManager->setService('custom.hydrator', $this->getMock('Zend\Hydrator\ArraySerializable'));
 
         $hydrator = $this->createOrmHydrator();
 

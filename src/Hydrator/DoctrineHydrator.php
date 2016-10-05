@@ -7,8 +7,7 @@ use Zend\Hydrator\HydratorInterface;
 /**
  * Class DoctrineHydrator.
  */
-class DoctrineHydrator
-    implements HydratorInterface
+class DoctrineHydrator implements HydratorInterface
 {
     /**
      * @var HydratorInterface
@@ -58,22 +57,22 @@ class DoctrineHydrator
         return $this->extractService->extract($object);
     }
 
-     /**
-      * Hydrate $object with the provided $data.
-      *
-      * @param array  $data
-      * @param object $object
-      *
-      * @return object
-      */
-     public function hydrate(array $data, $object)
-     {
-         // Zend hydrator:
+    /**
+     * Hydrate $object with the provided $data.
+     *
+     * @param array $data
+     * @param object $object
+     *
+     * @return object
+     */
+    public function hydrate(array $data, $object)
+    {
+        // Zend hydrator:
         if ($this->hydrateService instanceof HydratorInterface) {
             return $this->hydrateService->hydrate($data, $object);
         }
 
         // Doctrine hydrator: (parameters switched)
         return $this->hydrateService->hydrate($object, $data);
-     }
+    }
 }

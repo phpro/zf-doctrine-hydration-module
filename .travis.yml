@@ -25,7 +25,7 @@ before_install:
 install:
   - if [ "x${MONGO_VERSION}" != "x" ]; then yes '' | pecl -q install -f mongo-${MONGO_VERSION} && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`; fi
   - if [ "x${MONGODB_VERSION}" != "x" ]; then pecl install -f mongodb-${MONGODB_VERSION}; fi
-  - if [ "x${ADAPTER_VERSION}" != "x" ]; then composer config "platform.ext-mongo" "1.6.16" && composer require alcaeus/mongo-php-adapter; fi
+  - if [ "x${ADAPTER_VERSION}" != "x" ]; then composer config "platform.ext-mongo" "1.6.16" && composer require "alcaeus/mongo-php-adapter=${ADAPTER_VERSION}"; fi
   - if [ "$DEPENDENCIES" != "low" ]; then composer update --prefer-dist --no-scripts --no-interaction; fi;
   - if [ "$DEPENDENCIES" == "low" ]; then composer update --prefer-lowest --no-scripts --no-interaction; fi;
 

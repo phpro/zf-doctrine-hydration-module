@@ -142,7 +142,7 @@ class DoctrineHydratorFactory implements AbstractFactoryInterface
         }
 
         if ($useCustomHydrator) {
-            $extractService = $container->get($config['hydrator']);
+            $extractService = $container->build($config['hydrator'], $config);
             $hydrateService = $extractService;
         }
 

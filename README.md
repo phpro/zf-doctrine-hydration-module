@@ -13,7 +13,8 @@ It is also possible to hydrate advanced documents with discriminator maps.
 
 # Supported features 
 
-* 3.0.x: Contains zend-servicemanager 3 support requiring PHP 5.6+.
+* 4.0.x: Contains zend-servicemanager >=3.3.2 support requiring PHP 5.6+.
+* 3.0.x: Contains zend-servicemanager >=3 support requiring PHP 5.6+.
 * 2.0.x: Contains zend-hydrator support requiring PHP 5.6+.
 * 1.0.x: Contains zend-stdlib <2.7 support requiring PHP 5.4+.
 

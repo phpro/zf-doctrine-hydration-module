@@ -2,6 +2,7 @@
 
 namespace PhproTest\DoctrineHydrationModule\Tests\Service;
 
+use PhproTest\DoctrineHydrationModule\Hydrator\CustomBuildHydratorFactory;
 use Phpro\DoctrineHydrationModule\Service\DoctrineHydratorFactory;
 use Zend\ServiceManager\ServiceManager;
 use Zend\Hydrator\HydratorPluginManager;
@@ -183,6 +184,25 @@ class DoctrineHydratorFactoryTest extends \PHPUnit_Framework_TestCase
         $this->serviceManager->setService('config', $this->serviceConfig);
 
         $this->serviceManager->setService('custom.hydrator', $this->getMock('Zend\Hydrator\ArraySerializable'));
+
+        $hydrator = $this->createOrmHydrator();
+
+        $this->assertInstanceOf('Zend\Hydrator\ArraySerializable', $hydrator->getHydrateService());
+        $this->assertInstanceOf('Zend\Hydrator\ArraySerializable', $hydrator->getExtractService());
+    }
+
+    /**
+     * @test
+     */
+    public function it_should_be_possible_to_configure_a_custom_hydrator_as_factory()
+    {
+        $this->serviceConfig['doctrine-hydrator']['custom-hydrator']['hydrator'] = 'custom.build.hydrator';
+        $this->serviceManager->setService('config', $this->serviceConfig);
+
+        $this->serviceManager->setFactory(
+            'custom.build.hydrator',
+            new CustomBuildHydratorFactory()
+        );
 
         $hydrator = $this->createOrmHydrator();
 

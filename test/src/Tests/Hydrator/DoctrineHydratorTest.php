@@ -3,11 +3,12 @@
 namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator;
 
 use Phpro\DoctrineHydrationModule\Hydrator\DoctrineHydrator;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class DoctrineHydratorTest.
  */
-class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
+class DoctrineHydratorTest extends TestCase
 {
     /**
      * @param null $hydrateService
@@ -17,8 +18,8 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createHydrator($hydrateService = null, $extractService = null)
     {
-        $hydrateService = $hydrateService ? $hydrateService : $this->getMock('Zend\Hydrator\HydratorInterface');
-        $extractService = $extractService ? $extractService : $this->getMock('Zend\Hydrator\HydratorInterface');
+        $hydrateService = $hydrateService ? $hydrateService : $this->getMockBuilder('Zend\Hydrator\HydratorInterface')->getMock();
+        $extractService = $extractService ? $extractService : $this->getMockBuilder('Zend\Hydrator\HydratorInterface')->getMock();
 
         return new DoctrineHydrator($extractService, $hydrateService);
     }
@@ -57,7 +58,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
     {
         $object = new \stdClass();
         $extracted = array('extracted' => true);
-        $extractService = $this->getMock('Zend\Hydrator\HydratorInterface');
+        $extractService = $this->getMockBuilder('Zend\Hydrator\HydratorInterface')->getMock();
         $extractService
             ->expects($this->any())
             ->method('extract')
@@ -77,7 +78,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
         $object = new \stdClass();
         $data = array('field' => 'value');
 
-        $hydrateService = $this->getMock('Zend\Hydrator\HydratorInterface');
+        $hydrateService = $this->getMockBuilder('Zend\Hydrator\HydratorInterface')->getMock();
         $hydrateService
             ->expects($this->any())
             ->method('hydrate')
@@ -98,7 +99,7 @@ class DoctrineHydratorTest extends \PHPUnit_Framework_TestCase
         $object = new \stdClass();
         $data = array('field' => 'value');
 
-        $hydrateService = $this->getMock('Doctrine\ODM\MongoDB\Hydrator\HydratorInterface');
+        $hydrateService = $this->getMockBuilder('Doctrine\ODM\MongoDB\Hydrator\HydratorInterface')->getMock();
         $hydrateService
             ->expects($this->any())
             ->method('hydrate')

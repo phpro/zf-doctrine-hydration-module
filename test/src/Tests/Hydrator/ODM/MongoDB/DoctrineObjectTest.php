@@ -22,7 +22,9 @@ class DoctrineObjectTest extends BaseTest
      */
     protected function createHydrator($objectManager = null)
     {
-        $objectManager = $objectManager ? $objectManager : $this->getMock('Doctrine\ODM\MongoDB\DocumentManager', array(), array(), '', false);
+        $objectManager = $objectManager ? $objectManager : $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')
+            ->disableOriginalConstructor()
+            ->getMock();
         $hydrator = new DoctrineObject($objectManager);
 
         return $hydrator;

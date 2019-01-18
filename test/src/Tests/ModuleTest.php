@@ -3,11 +3,12 @@
 namespace PhproTest\DoctrineHydrationModule\Tests;
 
 use Phpro\DoctrineHydrationModule\Module;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ModuleTest.
  */
-class ModuleTest extends \PHPUnit_Framework_TestCase
+class ModuleTest extends TestCase
 {
     /**
      * @test

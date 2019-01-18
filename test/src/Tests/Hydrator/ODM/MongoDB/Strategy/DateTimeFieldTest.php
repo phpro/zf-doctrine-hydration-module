@@ -3,11 +3,12 @@
 namespace PhproTest\DoctrineHydrationModule\Tests\Hydrator\ODM\MongoDB\Strategy;
 
 use Phpro\DoctrineHydrationModule\Hydrator\ODM\MongoDB\Strategy\DateTimeField;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class DateTimeFieldTest.
  */
-class DateTimeFieldTest extends \PHPUnit_Framework_TestCase
+class DateTimeFieldTest extends TestCase
 {
     /**
      * @param bool $isTimestamp

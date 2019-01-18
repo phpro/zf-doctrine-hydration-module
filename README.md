@@ -24,7 +24,7 @@ Make sure to commit on the correct branch if you want your changes to get merged
 
 ## Add to composer.json
 ```
-composer require phpro/zf-doctrine-hydration-module:^3.0
+composer require phpro/zf-doctrine-hydration-module
 ```
 
 ## Add to application config

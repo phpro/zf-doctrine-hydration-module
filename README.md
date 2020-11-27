@@ -1,3 +1,14 @@
+> ## Repository abandoned
+>
+> We are no longer using Apigility at PHPro anymore.
+> Therefor, it is hard for us to make the correct decisions for this package.
+> We are looking for someone who wants to take over the package and can push it in the correct direction again.
+>
+> Are you that person? Reach out and we'll discuss how we can help each other!
+>
+> Feel free to use it AS-IS, we won't be providing any support anymore.
+
+
 [![Build status](https://api.travis-ci.org/phpro/zf-doctrine-hydration-module.svg)](http://travis-ci.org/phpro/zf-doctrine-hydration-module)
 [![Packagist](https://img.shields.io/packagist/v/phpro/zf-doctrine-hydration-module.svg)](https://packagist.org/packages/phpro/zf-doctrine-hydration-module)
 [![Downloads](https://img.shields.io/packagist/dt/phpro/zf-doctrine-hydration-module.svg)](https://packagist.org/packages/phpro/zf-doctrine-hydration-module)
